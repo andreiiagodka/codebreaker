@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
 require_relative 'autoload.rb'
 
-puts INTRODUCTION.center(50, ' ** | ')
+Output.introduction
+Output.options
