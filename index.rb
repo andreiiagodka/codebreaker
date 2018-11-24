@@ -2,5 +2,7 @@
 
 require_relative 'autoload.rb'
 
+Message.new
+
 Output.introduction
 Output.options

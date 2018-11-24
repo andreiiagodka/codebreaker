@@ -1,0 +1,5 @@
+:introduction: Welcome to Codebreaker!
+:options: ['Start', 'Rules', 'Stats', 'Exit']
+:rules: Codebreaker rules
+:exit: Goodbye!
+:unexpected_option: You have passed unexpected option. Please choose one from listed options.

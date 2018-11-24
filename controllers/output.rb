@@ -3,25 +3,25 @@
 module Output
   class << self
     def introduction
-      puts INTRODUCTION
+      puts Message.phrase[:introduction]
     end
 
     def options
-      puts OPTIONS
+      puts Message.phrase[:options]
       Router.select_option(gets.chomp)
     end
 
     def rules
-      puts RULES
+      puts Message.phrase[:rules]
       options
     end
 
     def exit
-      puts EXIT
+      puts Message.phrase[:exit]
     end
 
     def unexpected_option
-      puts UNEXPECTED_OPTION
+      puts Message.phrase[:unexpected_option]
       options
     end
   end
