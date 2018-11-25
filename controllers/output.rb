@@ -24,5 +24,23 @@ module Output
       puts Message.phrase[:unexpected_option]
       options
     end
+
+    def registration_header
+      puts Message.phrase[:registration_header]
+    end
+
+    def input_player_name
+      print Message.phrase[:player_name_registration] + ': '
+      gets.chomp
+    end
+
+    def difficulty_header
+      puts Message.phrase[:difficulty_header]
+    end
+
+    def input_difficulty
+      puts Message.phrase[:difficulties]
+      gets.chomp
+    end
   end
 end
