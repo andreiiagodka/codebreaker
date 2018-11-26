@@ -4,11 +4,11 @@ module Registration
   include Output
 
   class << self
-    def registrate
+    def player_registration
       Output.registration_header
-      user_name = input_player_name
+      player_name = input_player_name
       difficulty = input_difficulty
-      User.new(user_name, difficulty[:attempts], difficulty[:hints])
+      Player.new(player_name, difficulty)
     end
 
     def input_player_name

@@ -7,3 +7,5 @@
 :player_name_registration: Input your name
 :difficulty_header: Choose difficulty
 :difficulties: [Easy, Medium, Hard]
+:codebreaker_start: The games has started! Try to guess secret code.
+:input_secret_code: Input secret code

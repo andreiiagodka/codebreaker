@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-module Game
+module Gameplay
   include Registration
-  
+
   class << self
     def process
-      Registration.registrate
+      player = Registration.player_registration
+      Game.new(player)
     end
   end
 end

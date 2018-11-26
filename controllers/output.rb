@@ -35,11 +35,20 @@ module Output
     end
 
     def difficulty_header
-      puts Message.phrase[:difficulty_header]
+      puts Message.phrase[:difficulty_header] + ': '
     end
 
     def input_difficulty
       puts Message.phrase[:difficulties]
+      gets.chomp
+    end
+
+    def codebreaker_start
+      puts Message.phrase[:codebreaker_start]
+    end
+
+    def input_secret_code
+      print Message.phrase[:input_secret_code] + ': '
       gets.chomp
     end
   end
