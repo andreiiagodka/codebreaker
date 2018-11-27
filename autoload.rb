@@ -5,9 +5,8 @@ require 'yaml'
 
 require_all './helpers'
 require_all './entities'
+require_all './validation'
 
-require_relative './controllers/message'
-require_relative './controllers/output'
 require_relative './controllers/registration'
 require_relative './controllers/gameplay'
 require_relative './controllers/router'

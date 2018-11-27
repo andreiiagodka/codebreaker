@@ -8,7 +8,7 @@ module Router
       when 'rules' then Output.rules
       when 'stats' then puts 'its stats'
       when 'exit' then Output.exit
-      else Output.unexpected_option
+      else Error.unexpected_option
       end
     end
   end

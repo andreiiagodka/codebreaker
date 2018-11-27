@@ -2,7 +2,6 @@
 :options: [Start, Rules, Stats, Exit]
 :rules: Codebreaker rules
 :exit: Goodbye!
-:unexpected_option: You have passed unexpected option. Please choose one from listed options.
 :registration_header: Codebreaker Registration
 :player_name_registration: Input your name
 :difficulty_header: Choose difficulty

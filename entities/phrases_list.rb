@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Message
+class PhrasesList
   def initialize
     @@phrases = load_phrases
   end
