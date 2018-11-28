@@ -14,5 +14,5 @@ HARD_DIFFICULTY = [difficulty: 'hard', attempts: 5, hints: 1].freeze
 
 SECRET_CODE_LENGTH = 4
 
-ELEMENT_MIN_VALUE = 3
-ELEMENT_MAX_VALUE = 20
+ELEMENT_MIN_VALUE = 1
+ELEMENT_MAX_VALUE = 6
