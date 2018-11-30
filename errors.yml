@@ -1,5 +1,0 @@
-:player_name_length: Player name min size - 3, max - 20
-:unexpected_option: You have passed unexpected option. Please choose one from listed options.
-:secret_code_length: 4 elements are required!
-:secret_code_format: Only digits are required!
-:secret_code_digit_range: Each digit has to be in range 1-6

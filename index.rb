@@ -2,8 +2,6 @@
 
 require_relative 'autoload.rb'
 
-PhrasesList.new
-ErrorsList.new
+Content.new
 
 Output.introduction
-Output.options

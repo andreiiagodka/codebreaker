@@ -11,7 +11,7 @@ class Game
   end
 
   def start
-    Output.game_start
+    Output.game_start_header
     generated = generate_secret_code
     puts generated
     loop do

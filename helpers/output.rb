@@ -3,33 +3,40 @@
 module Output
   class << self
     def introduction
-      puts PhrasesList.phrase[:introduction]
+      puts output[:introduction]
+      options
     end
 
     def options
-      puts PhrasesList.phrase[:options]
+      puts output[:options]
       Router.select_option(gets.chomp)
     end
 
     def rules
-      puts PhrasesList.phrase[:rules]
+      puts output[:rules]
       options
     end
 
     def exit
-      puts PhrasesList.phrase[:exit]
+      puts output[:exit]
     end
 
     def registration_header
-      puts PhrasesList.phrase[:registration_header]
+      puts output[:registration_header]
     end
 
     def difficulty_header
-      puts PhrasesList.phrase[:difficulty_header] + ': '
+      puts output[:difficulty_header] + ': '
     end
 
-    def game_start
-      puts PhrasesList.phrase[:codebreaker_start]
+    def game_start_header
+      puts output[:game_start_header]
+    end
+
+    private
+
+    def output
+      Content.output
     end
   end
 end
