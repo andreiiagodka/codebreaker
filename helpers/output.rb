@@ -33,10 +33,22 @@ module Output
       puts output[:game_start_header]
     end
 
+    def statistics game
+      puts "Used attempts: #{attempts(game)}. Used hints: #{hints(game)}."
+    end
+
     private
 
     def output
       Content.output
+    end
+
+    def attempts game
+      "#{game.used_attempts}/#{game.total_attempts}"
+    end
+
+    def hints game
+      "#{game.used_hints}/#{game.total_hints}"
     end
   end
 end

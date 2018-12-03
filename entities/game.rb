@@ -13,16 +13,19 @@ class Game
   def start
     Output.game_start_header
     generated = generate_secret_code
+    cloned = generated.clone
     puts generated
     loop do
-      output_statistics
+      Output.statistics(self)
       secret_code = Input.secret_code
       check_secret_code = Validator.secret_code(secret_code)
-      if check_secret_code.nil?
+      if secret_code == 'hint'
+        increment_used_hints
+        puts cloned.shift
+      elsif check_secret_code.nil?
         result = comparison_result(secret_code, generated)
         puts result
         increment_used_attempts
-        increment_used_hints if secret_code == 'hint'
         return if result == '++++'
         return if @used_attempts == @total_attempts
         return if @used_hints == @total_hints
@@ -33,10 +36,6 @@ class Game
   end
 
   private
-
-  def output_statistics
-    puts "Used attempts: #{@used_attempts}/#{@total_attempts}. Used hints: #{@used_hints}/#{@total_hints}."
-  end
 
   def generate_secret_code
     Array.new(4) { rand(ELEMENT_MIN_VALUE..ELEMENT_MAX_VALUE) }
