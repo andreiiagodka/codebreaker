@@ -23,6 +23,10 @@ module Error
       error[:secret_code_digit_range]
     end
 
+    def hints_limit
+      puts error[:hints_limit]
+    end
+
     private
 
     def error

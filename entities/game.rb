@@ -12,49 +12,44 @@ class Game
 
   def start
     Output.game_start_header
-    generated = generate_secret_code
-    cloned = generated.clone
+    generated = SecretCode.generate
     puts generated
-    loop do
-      Output.statistics(self)
-      secret_code = Input.secret_code
-      check_secret_code = Validator.secret_code(secret_code)
-      if secret_code == 'hint'
-        increment_used_hints
-        puts cloned.shift
-      elsif check_secret_code.nil?
-        result = comparison_result(secret_code, generated)
-        puts result
-        increment_used_attempts
-        return if result == '++++'
-        return if @used_attempts == @total_attempts
-        return if @used_hints == @total_hints
-      else
-        puts check_secret_code
-      end
-    end
+    gameflow(generated)
   end
 
   private
 
-  def generate_secret_code
-    Array.new(4) { rand(ELEMENT_MIN_VALUE..ELEMENT_MAX_VALUE) }
+  def gameflow(secret_code)
+    cloned = secret_code.clone
+    loop do
+      Output.statistics(self)
+      input = Input.secret_code
+      validated = Validator.secret_code(input)
+      if input == HINT_KEYWORD
+        show_hint(cloned)
+      elsif validated.nil?
+        marked_guess = SecretCode.mark_guess(input, secret_code)
+        increment_used_attempts
+        puts marked_guess
+      else
+        puts validated
+      end
+      return if marked_guess == WINNING_COMBINATION || check_attempts
+    end
   end
 
-  def comparison_result(inputed, generated)
-    digits = inputed.split('').map(&:to_i)
-    gen_secret_code = generated.clone
-    result = []
-    digits.each_with_index do |digit, index|
-      if digit == generated[index]
-        result << '+'
-        gen_secret_code.delete(digit)
-      end
-    end
-    digits.each do |digit|
-      result << '-' if gen_secret_code.include? digit
-    end
-    result.join('')
+  def show_hint(cloned)
+    return Error.hints_limit if check_hints
+    increment_used_hints
+    puts cloned.shift
+  end
+
+  def check_attempts
+    @used_attempts == @total_attempts
+  end
+
+  def check_hints
+    @used_hints >= @total_hints
   end
 
   def increment_used_attempts
