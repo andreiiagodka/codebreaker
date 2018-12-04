@@ -23,25 +23,42 @@ class Game
     cloned = secret_code.clone
     loop do
       Output.statistics(self)
+      input = input_secret_code
+      if check_hint(input)
+        increment_used_hints
+        show_hint(cloned)
+      else
+        increment_used_attempts
+        marked_guess = SecretCode.mark_guess(input, secret_code)
+        puts marked_guess
+      end
+      return Output.win if check_winning_combination(marked_guess)
+      return Error.attempts_limit if check_attempts
+    end
+  end
+
+  def input_secret_code
+    loop do
       input = Input.secret_code
       validated = Validator.secret_code(input)
-      if input == HINT_KEYWORD
-        show_hint(cloned)
-      elsif validated.nil?
-        marked_guess = SecretCode.mark_guess(input, secret_code)
-        increment_used_attempts
-        puts marked_guess
-      else
-        puts validated
-      end
-      return if marked_guess == WINNING_COMBINATION || check_attempts
+      return input if check_hint(input) || validated.nil?
+
+      puts validated
     end
   end
 
   def show_hint(cloned)
     return Error.hints_limit if check_hints
-    increment_used_hints
+    
     puts cloned.shift
+  end
+
+  def check_hint(argument)
+    argument == HINT_KEYWORD
+  end
+
+  def check_winning_combination(argument)
+    argument == WINNING_COMBINATION
   end
 
   def check_attempts

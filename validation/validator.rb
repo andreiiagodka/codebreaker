@@ -20,6 +20,10 @@ module Validator
       player_name.length.between?(USER_NAME_MIN_LENGTH, USER_NAME_MAX_LENGTH)
     end
 
+    def check_hint(secret_code)
+      secret_code == HINT_KEYWORD
+    end
+
     def check_integer(argument)
       true if Integer(argument) rescue false
     end

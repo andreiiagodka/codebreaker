@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'pry'
+
 module SecretCode
   class << self
     def generate
@@ -26,6 +26,7 @@ module SecretCode
       secret_code = cloned.clone
       digits.each_with_index do |digit, index|
         next unless digit == secret_code[index]
+        
         marked_guess << '+'
         remove_digit(digit, cloned)
       end
@@ -34,6 +35,7 @@ module SecretCode
     def number_match(digits, marked_guess, cloned)
       digits.each do |digit|
         next unless cloned.include? digit
+
         digit_quantity = cloned.count(digit)
         digit_quantity.times { marked_guess << '-' }
       end

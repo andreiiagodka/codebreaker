@@ -27,6 +27,10 @@ module Error
       puts error[:hints_limit]
     end
 
+    def attempts_limit
+      puts error[:attempts_limit]
+    end
+
     private
 
     def error

@@ -6,6 +6,7 @@
   :registration_header: Codebreaker Registration
   :difficulty_header: Choose difficulty
   :game_start_header: The games has started! Try to guess secret code.
+  :win: Congratulations! You have guessed it!
 
 :input:
   :player_name_registration: Input your name
@@ -19,3 +20,4 @@
   :secret_code_format: Only digits are required!
   :secret_code_digit_range: Each digit has to be in range 1-6!
   :hints_limit: You are out of hints!
+  :attempts_limit: You are out of attempts!
