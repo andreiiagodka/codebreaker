@@ -2,6 +2,10 @@
 
 module Output
   class << self
+    def show(argument)
+      puts argument
+    end
+
     def introduction
       puts output[:introduction]
       options

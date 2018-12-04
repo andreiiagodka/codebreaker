@@ -7,7 +7,8 @@ module Gameplay
     def process
       player = Registration.player_registration
       game = Game.new(player)
-      game.start
+      result = game.start
+      puts result
     end
   end
 end

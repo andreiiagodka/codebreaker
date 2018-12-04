@@ -24,16 +24,13 @@ class Game
     loop do
       Output.statistics(self)
       input = input_secret_code
-      if check_hint(input)
-        increment_used_hints
-        show_hint(cloned)
-      else
-        increment_used_attempts
-        marked_guess = SecretCode.mark_guess(input, secret_code)
-        puts marked_guess
-      end
-      return Output.win if check_winning_combination(marked_guess)
-      return Error.attempts_limit if check_attempts
+      next use_hint(cloned) if check_hint(input)
+      
+      increment_used_attempts
+      marked_guess = SecretCode.mark_guess(input, secret_code)
+      Output.show(marked_guess)
+      return win if check_winning_combination(marked_guess)
+      return loss if check_attempts
     end
   end
 
@@ -43,14 +40,25 @@ class Game
       validated = Validator.secret_code(input)
       return input if check_hint(input) || validated.nil?
 
-      puts validated
+      Output.show(validated)
     end
   end
 
-  def show_hint(cloned)
+  def use_hint(cloned)
     return Error.hints_limit if check_hints
-    
-    puts cloned.shift
+
+    increment_used_hints
+    Output.show(cloned.shift)
+  end
+
+  def win
+    Output.win
+    [win: true, statistic: self]
+  end
+
+  def loss
+    Error.attempts_limit
+    [win: false]
   end
 
   def check_hint(argument)
