@@ -2,53 +2,51 @@
 
 module Output
   class << self
-    def show(argument)
-      puts argument
-    end
-
     def introduction
-      show(output[:introduction])
-      options
+      show_in_console(:introduction)
     end
 
     def options
-      show(output[:options])
-      Router.select_option(gets.chomp)
+      show_in_console(:options)
     end
 
     def rules
-      show(output[:rules])
+      show_in_console(:rules)
       options
     end
 
     def exit
-      show(output[:exit])
+      show_in_console(:exit)
     end
 
     def registration_header
-      show(output[:registration_header])
+      show_in_console(:registration_header)
     end
 
     def difficulty_header
-      show(output[:difficulty_header] + ': ')
+      show_in_console(:difficulty_header)
     end
 
     def game_start_header
-      show(output[:game_start_header])
+      show_in_console(:game_start_header)
+    end
+
+    def win
+      show_in_console(:win)
+    end
+
+    def show(argument)
+      puts argument
     end
 
     def statistics(game)
       show("Used attempts: #{attempts(game)}. Used hints: #{hints(game)}.")
     end
 
-    def win
-      show(output[:win])
-    end
-
     private
 
-    def output
-      Content.output
+    def show_in_console(phrase)
+      puts Content.output[phrase]
     end
 
     def attempts(game)

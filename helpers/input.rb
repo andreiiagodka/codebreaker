@@ -22,10 +22,14 @@ module Input
       get_input_from_console(:start_new_game)
     end
 
+    def input
+      gets.chomp
+    end
+
     private
 
-    def get_input_from_console(input_phrase)
-      print Content.input[input_phrase] + ': '
+    def get_input_from_console(phrase)
+      print Content.input[phrase] + ': '
       gets.chomp
     end
   end

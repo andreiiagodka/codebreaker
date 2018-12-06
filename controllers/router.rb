@@ -1,9 +1,11 @@
 # frozen_string_literal: true
-require 'pry'
+
 module Router
   class << self
-    def select_option(option)
-      case option.downcase
+    def select_option
+      Output.options
+      option = Input.input.downcase
+      case option
       when START_KEYWORD
         Gameplay.process
       when RULES_KEYWORD
