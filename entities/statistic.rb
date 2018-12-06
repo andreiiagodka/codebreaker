@@ -12,8 +12,7 @@ class Statistic
   end
 
   def self.show
-    statistic = load
-    statistic.each_with_index { |record, index|
+    Statistic.load.each_with_index { |record, index|
       Output.show("Rating: #{index + 1}")
       Output.show("- name: #{record[:name]}")
       Output.show("- difficulty: #{record[:difficulty]}")
@@ -30,7 +29,7 @@ class Statistic
     File.open(STATISTIC_YML, 'a') { |file| file.write statistic_hash.to_yaml }
   end
 
-  def load
+  def self.load
     YAML.load_stream(File.read(STATISTIC_YML)).sort_by { |statistic| statistic[:difficulty] }
   end
 

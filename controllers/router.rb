@@ -8,10 +8,10 @@ module Router
         Gameplay.process
       when RULES_KEYWORD
         Output.rules
+        Router.select_option
       when STATS_KEYWORD
-        binding.pry
-        
         Statistic.show
+        Router.select_option
       when EXIT_KEYWORD
         Output.exit
       else Error.unexpected_option
