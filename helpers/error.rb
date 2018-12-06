@@ -7,6 +7,10 @@ module Error
       Output.options
     end
 
+    def unexpected_command
+      puts error[:unexpected_command]
+    end
+
     def player_name_length
       error[:player_name_length]
     end

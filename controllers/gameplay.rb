@@ -8,7 +8,12 @@ module Gameplay
       player = Registration.player_registration
       game = Game.new(player)
       result = game.start
-      puts result
+      result[:win] ? win(player, result) : 'loss'
+    end
+
+    def win(player, result)
+      Router.save_result
+      Router.start_new_game
     end
   end
 end

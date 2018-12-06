@@ -7,42 +7,42 @@ module Output
     end
 
     def introduction
-      puts output[:introduction]
+      show(output[:introduction])
       options
     end
 
     def options
-      puts output[:options]
+      show(output[:options])
       Router.select_option(gets.chomp)
     end
 
     def rules
-      puts output[:rules]
+      show(output[:rules])
       options
     end
 
     def exit
-      puts output[:exit]
+      show(output[:exit])
     end
 
     def registration_header
-      puts output[:registration_header]
+      show(output[:registration_header])
     end
 
     def difficulty_header
-      puts output[:difficulty_header] + ': '
+      show(output[:difficulty_header] + ': ')
     end
 
     def game_start_header
-      puts output[:game_start_header]
+      show(output[:game_start_header])
     end
 
     def statistics(game)
-      puts "Used attempts: #{attempts(game)}. Used hints: #{hints(game)}."
+      show("Used attempts: #{attempts(game)}. Used hints: #{hints(game)}.")
     end
 
     def win
-      puts output[:win]
+      show(output[:win])
     end
 
     private

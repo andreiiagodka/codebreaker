@@ -3,6 +3,7 @@
 YML_FORMAT = '.yml'
 
 CONTENT_YML = 'content' + YML_FORMAT
+STATISTIC_YML = 'statistic' + YML_FORMAT
 
 USER_NAME_MIN_LENGTH = 3
 USER_NAME_MAX_LENGTH = 20
@@ -21,5 +22,7 @@ RULES_KEYWORD = 'rules'
 STATS_KEYWORD = 'stats'
 EXIT_KEYWORD = 'exit'
 HINT_KEYWORD = 'hint'
+YES_KEYWORD = 'yes'
+NO_KEYWORD = 'no'
 
 WINNING_COMBINATION = '++++'

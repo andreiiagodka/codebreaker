@@ -3,24 +3,30 @@
 module Input
   class << self
     def player_name
-      print input[:player_name_registration] + ': '
-      gets.chomp
+      get_input_from_console(:player_name_registration)
     end
 
     def difficulty
-      puts input[:difficulties]
-      gets.chomp
+      get_input_from_console(:difficulties)
     end
 
     def secret_code
-      print input[:input_secret_code] + ': '
-      gets.chomp
+      get_input_from_console(:input_secret_code)
     end
 
-    print
+    def save_result
+      get_input_from_console(:save_result)
+    end
 
-    def input
-      Content.input
+    def start_new_game
+      get_input_from_console(:start_new_game)
+    end
+
+    private
+
+    def get_input_from_console(input_phrase)
+      print Content.input[input_phrase] + ': '
+      gets.chomp
     end
   end
 end

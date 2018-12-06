@@ -25,7 +25,7 @@ class Game
       Output.statistics(self)
       input = input_secret_code
       next use_hint(cloned) if check_hint(input)
-      
+
       increment_used_attempts
       marked_guess = SecretCode.mark_guess(input, secret_code)
       Output.show(marked_guess)
@@ -53,12 +53,18 @@ class Game
 
   def win
     Output.win
-    [win: true, statistic: self]
+    {
+      win: true,
+      total_attempts: @total_attempts,
+      used_attempts: @used_attempts,
+      total_hints: @total_hints,
+      used_hints: @used_hints
+    }
   end
 
   def loss
     Error.attempts_limit
-    [win: false]
+    {win: false}
   end
 
   def check_hint(argument)
