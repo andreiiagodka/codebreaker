@@ -1,21 +1,28 @@
---- !ruby/object:Statistic
-name: sadasd
-difficulty: easy
-total_attempts: 15
-used_attempts: 1
-total_hints: 3
-used_hints: 0
---- !ruby/object:Statistic
-name: sadasd
-difficulty: easy
-total_attempts: 15
-used_attempts: 1
-total_hints: 3
-used_hints: 0
---- !ruby/object:Statistic
-name: sdasd
-difficulty: easy
-total_attempts: 15
-used_attempts: 1
-total_hints: 3
-used_hints: 0
+---
+:name: lksad
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 1
+:total_hints: 3
+:used_hints: 0
+---
+:name: ";lksdfmk;k"
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 1
+:total_hints: 3
+:used_hints: 0
+---
+:name: kdfkm221lksasa;l3
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 1
+:total_hints: 3
+:used_hints: 0
+---
+:name: ";lkds;dl"
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 1
+:total_hints: 3
+:used_hints: 0

@@ -12,7 +12,7 @@ module Gameplay
     end
 
     def win(player, result)
-      Router.save_result
+      Router.save_result(player, result)
       Router.start_new_game
     end
   end

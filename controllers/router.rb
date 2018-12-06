@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'pry'
 module Router
   class << self
     def select_option(option)
@@ -9,18 +9,21 @@ module Router
       when RULES_KEYWORD
         Output.rules
       when STATS_KEYWORD
-        puts 'its stats'
+        binding.pry
+        
+        Statistic.show
       when EXIT_KEYWORD
         Output.exit
       else Error.unexpected_option
       end
     end
 
-    def save_result
+    def save_result(player, result)
       loop do
         case Input.save_result
         when YES_KEYWORD
           Statistic.new(player, result)
+          return
         when NO_KEYWORD
           return Output.exit
         else Error.unexpected_command
