@@ -2,5 +2,4 @@
 
 require_relative 'autoload.rb'
 
-Output.introduction
-Router.select_option
+Console.new.start

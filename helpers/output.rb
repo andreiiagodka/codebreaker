@@ -1,60 +1,62 @@
 # frozen_string_literal: true
 
-module Output
-  class << self
-    def introduction
-      show_in_console(:introduction)
-    end
+class Output
+  def initialize
+    @output ||= Content.new.output
+  end
 
-    def options
-      show_in_console(:options)
-    end
+  def show(argument)
+    puts argument
+  end
 
-    def rules
-      show_in_console(:rules)
-      options
-    end
+  def introduction
+    show_in_console(:introduction)
+  end
 
-    def exit
-      show_in_console(:exit)
-    end
+  def options
+    show_in_console(:options)
+  end
 
-    def registration_header
-      show_in_console(:registration_header)
-    end
+  def rules
+    show_in_console(:rules)
+    options
+  end
 
-    def difficulty_header
-      show_in_console(:difficulty_header)
-    end
+  def exit
+    show_in_console(:exit)
+  end
 
-    def game_start_header
-      show_in_console(:game_start_header)
-    end
+  def registration_header
+    show_in_console(:registration_header)
+  end
 
-    def win
-      show_in_console(:win)
-    end
+  def difficulty_header
+    show_in_console(:difficulty_header)
+  end
 
-    def show(argument)
-      puts argument
-    end
+  def game_start_header
+    show_in_console(:game_start_header)
+  end
 
-    def statistics(game)
-      show("Used attempts: #{attempts(game)}. Used hints: #{hints(game)}.")
-    end
+  def win
+    show_in_console(:win)
+  end
 
-    private
+  def statistics(game)
+    show("Used attempts: #{attempts(game)}. Used hints: #{hints(game)}.")
+  end
 
-    def show_in_console(phrase)
-      puts Content.output[phrase]
-    end
+  private
 
-    def attempts(game)
-      "#{game.used_attempts}/#{game.total_attempts}"
-    end
+  def show_in_console(phrase)
+    puts @output[phrase]
+  end
 
-    def hints(game)
-      "#{game.used_hints}/#{game.total_hints}"
-    end
+  def attempts(game)
+    "#{game.used_attempts}/#{game.total_attempts}"
+  end
+
+  def hints(game)
+    "#{game.used_hints}/#{game.total_hints}"
   end
 end
