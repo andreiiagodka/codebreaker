@@ -2,10 +2,13 @@
 
 require 'require_all'
 require 'yaml'
+require 'i18n'
 
 require_all './helpers'
 require_all './entities'
 require_all './validation'
+
+require_relative 'i18n_config'
 
 require_relative './controllers/registration'
 require_relative './controllers/gameplay'

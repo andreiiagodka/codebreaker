@@ -1,27 +1,17 @@
 # frozen_string_literal: true
 
 class Content
-  def initialize
-    @@content = load
-  end
-
   class << self
     def output
-      @@content[:output]
+      I18n.t(:output)
     end
 
     def input
-      @@content[:input]
+      I18n.t(:input)
     end
 
     def error
-      @@content[:error]
+      I18n.t(:error)
     end
-  end
-
-  private
-
-  def load
-    YAML.load_stream(File.read(CONTENT_YML)).first
   end
 end

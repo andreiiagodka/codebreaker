@@ -1,26 +1,27 @@
-:output:
-  :introduction: Welcome to Codebreaker!
-  :options: [Start, Rules, Stats, Exit]
-  :rules: Codebreaker rules
-  :exit: Goodbye!
-  :registration_header: Codebreaker Registration
-  :difficulty_header: Choose difficulty
-  :game_start_header: The games has started! Try to guess secret code.
-  :win: Congratulations! You have guessed it!
+en:
+  output:
+    introduction: Welcome to Codebreaker!
+    options: [Start, Rules, Stats, Exit]
+    rules: Codebreaker rules
+    exit: Goodbye!
+    registration_header: Codebreaker Registration
+    difficulty_header: Choose difficulty
+    game_start_header: The games has started! Try to guess secret code.
+    win: Congratulations! You have guessed it!
 
-:input:
-  :player_name_registration: Input your name
-  :difficulties: Easy, Medium, Hard
-  :input_secret_code: Input secret code
-  :save_result: Would you like to save result of the game? [yes/no]
-  :start_new_game: Would you like to start a new game? [yes/no]
+  input:
+    player_name_registration: Input your name
+    difficulties: Easy, Medium, Hard
+    input_secret_code: Input secret code
+    save_result: Would you like to save result of the game? [yes/no]
+    start_new_game: Would you like to start a new game? [yes/no]
 
-:error:
-  :unexpected_option: You have passed unexpected option. Please choose one from listed options.
-  :unexpected_command: You have passed unexpected command. Please choose one from listed options.
-  :player_name_length: Player name min size - 3, max - 20
-  :secret_code_length: 4 elements are required!
-  :secret_code_format: Only digits are required!
-  :secret_code_digit_range: Each digit has to be in range 1-6!
-  :hints_limit: You are out of hints!
-  :attempts_limit: You are out of attempts!
+  error:
+    unexpected_option: You have passed unexpected option. Please choose one from listed options.
+    unexpected_command: You have passed unexpected command. Please choose one from listed options.
+    player_name_length: Player name min size - 3, max - 20
+    secret_code_length: 4 elements are required!
+    secret_code_format: Only digits are required!
+    secret_code_digit_range: Each digit has to be in range 1-6!
+    hints_limit: You are out of hints!
+    attempts_limit: You are out of attempts!
