@@ -33,6 +33,8 @@ GEM
     ruby_parser (3.11.0)
       sexp_processor (~> 4.9)
     sexp_processor (4.11.0)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     unicode-display_width (1.4.0)
 
 PLATFORMS
@@ -44,6 +46,7 @@ DEPENDENCIES
   pry
   require_all (~> 2.0)
   rubocop
+  terminal-table
 
 RUBY VERSION
    ruby 2.5.1p57

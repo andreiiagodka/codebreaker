@@ -2,7 +2,7 @@
 
 class Output
   def initialize
-    @output ||= Content.new.output
+    @output = I18n.t(:output)
   end
 
   def show(argument)
@@ -19,7 +19,6 @@ class Output
 
   def rules
     show_in_console(:rules)
-    options
   end
 
   def exit

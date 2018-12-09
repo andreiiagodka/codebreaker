@@ -25,3 +25,7 @@ en:
     secret_code_digit_range: Each digit has to be in range 1-6!
     hints_limit: You are out of hints!
     attempts_limit: You are out of attempts!
+
+  table:
+    title: Rating of Codebreakers
+    headings: [Rating, Name, Difficulty, Total Attempts, Used Attempts, Total Hints, Used Hints]

@@ -9,5 +9,6 @@ ruby '2.5.1'
 gem 'fasterer'
 gem 'i18n'
 gem 'pry'
+gem 'terminal-table'
 gem 'require_all', '~> 2.0'
 gem 'rubocop', require: false
