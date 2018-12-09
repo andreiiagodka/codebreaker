@@ -10,12 +10,12 @@ class Console
     output.options
     case input.input.downcase
     when START_COMMAND
-      puts 'start'
+      gameplay
     when RULES_COMMAND
       output.rules
       options
     when STATS_COMMAND
-      output.show(statistic.rating_table)
+      rating
       options
     when EXIT_COMMAND
       output.exit
@@ -24,6 +24,23 @@ class Console
   end
 
   private
+
+  def gameplay
+    registration
+  end
+
+  def registration
+    output.registration_header
+    loop do
+      player = Player.new(input.player_name)
+      player.validate
+      player.errors.empty? ? exit : output.show(player.errors)
+    end
+  end
+
+  def rating
+    output.show(statistic.rating_table)
+  end
 
   def statistic
     @statistic ||= Statistic.new

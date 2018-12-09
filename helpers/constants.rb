@@ -5,8 +5,8 @@ YML_FORMAT = '.yml'
 CONTENT_YML = 'content' + YML_FORMAT
 STATISTIC_YML = 'statistic' + YML_FORMAT
 
-USER_NAME_MIN_LENGTH = 3
-USER_NAME_MAX_LENGTH = 20
+NAME_MIN_LENGTH = 3
+NAME_MAX_LENGTH = 20
 
 EASY_DIFFICULTY = [difficulty: 'easy', attempts: 15, hints: 3].freeze
 MEDIUM_DIFFICULTY = [difficulty: 'medium', attempts: 10, hints: 2].freeze
@@ -16,13 +16,5 @@ SECRET_CODE_LENGTH = 4
 
 ELEMENT_MIN_VALUE = 1
 ELEMENT_MAX_VALUE = 6
-
-START_KEYWORD = 'start'
-RULES_KEYWORD = 'rules'
-STATS_KEYWORD = 'stats'
-EXIT_KEYWORD = 'exit'
-HINT_KEYWORD = 'hint'
-YES_KEYWORD = 'yes'
-NO_KEYWORD = 'no'
 
 WINNING_COMBINATION = '++++'

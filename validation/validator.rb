@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 module Validator
-  include Error
-
   class << self
-    def player_name(player_name)
-      check_player_name_length(player_name)
+    def check_name_length(name)
+      name.length.between?(NAME_MIN_LENGTH, NAME_MAX_LENGTH)
     end
 
     def secret_code(secret_code)
@@ -16,9 +14,6 @@ module Validator
 
     private
 
-    def check_player_name_length(player_name)
-      player_name.length.between?(USER_NAME_MIN_LENGTH, USER_NAME_MAX_LENGTH)
-    end
 
     def check_hint(secret_code)
       secret_code == HINT_KEYWORD
