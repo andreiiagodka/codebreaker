@@ -6,11 +6,15 @@ class Error
   end
 
   def unexpected_option
-    puts error(:unexpected_option)
+    error(:unexpected_option)
   end
 
   def unexpected_command
     puts error(:unexpected_command)
+  end
+
+  def unexpected_difficulty
+    error(:unexpected_difficulty)
   end
 
   def player_name_length

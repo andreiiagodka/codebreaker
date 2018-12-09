@@ -19,6 +19,7 @@ en:
   error:
     unexpected_option: You have passed unexpected option. Please choose one from listed options.
     unexpected_command: You have passed unexpected command. Please choose one from listed options.
+    unexpected_difficulty: You have passed unexpected difficulty. Please choose one from listed difficulties.
     player_name_length: Player name min size - 3, max - 20
     secret_code_length: 4 elements are required!
     secret_code_format: Only digits are required!

@@ -1,16 +1,7 @@
 # frozen_string_literal: true
 
-YML_FORMAT = '.yml'
-
-CONTENT_YML = 'content' + YML_FORMAT
-STATISTIC_YML = 'statistic' + YML_FORMAT
-
 NAME_MIN_LENGTH = 3
 NAME_MAX_LENGTH = 20
-
-EASY_DIFFICULTY = [difficulty: 'easy', attempts: 15, hints: 3].freeze
-MEDIUM_DIFFICULTY = [difficulty: 'medium', attempts: 10, hints: 2].freeze
-HARD_DIFFICULTY = [difficulty: 'hard', attempts: 5, hints: 1].freeze
 
 SECRET_CODE_LENGTH = 4
 

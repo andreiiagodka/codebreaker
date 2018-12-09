@@ -20,13 +20,17 @@ class Console
     when EXIT_COMMAND
       output.exit
       exit
+    else
+      output.show(error.unexpected_option)
+      options
     end
   end
 
   private
 
   def gameplay
-    registration
+    player = registration
+    game
   end
 
   def registration
@@ -34,7 +38,28 @@ class Console
     loop do
       player = Player.new(input.player_name)
       player.validate
-      player.errors.empty? ? exit : output.show(player.errors)
+      return player if player.errors.empty?
+
+      output.show(player.errors)
+    end
+  end
+
+  def game
+    Game.new(select_difficulty)
+  end
+
+  def select_difficulty
+    output.difficulty_header
+    case input.difficulty.downcase
+    when EASY_KEYWORD
+      EASY_DIFFICULTY
+    when MEDIUM_KEYWORD
+      MEDIUM_DIFFICULTY
+    when HARD_KEYWORD
+      HARD_DIFFICULTY
+    else
+      output.show(error.unexpected_difficulty)
+      select_difficulty
     end
   end
 
@@ -52,5 +77,9 @@ class Console
 
   def input
     @input ||= Input.new
+  end
+
+  def error
+    @error ||= Error.new
   end
 end

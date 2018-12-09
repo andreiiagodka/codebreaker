@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class Game
-  attr_reader :player, :total_attempts, :used_attempts, :total_hints, :used_hints
+  attr_reader :total_attempts, :used_attempts, :total_hints, :used_hints
 
-  def initialize(player, used_attempts = 0, used_hints = 0)
-    @total_attempts = player.difficulty[:attempts]
+  def initialize(difficulty, used_attempts = 0, used_hints = 0)
+    @total_attempts = difficulty[:attempts]
     @used_attempts = used_attempts
-    @total_hints = player.difficulty[:hints]
+    @total_hints = difficulty[:hints]
     @used_hints = used_hints
   end
 
