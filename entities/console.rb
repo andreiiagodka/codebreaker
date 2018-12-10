@@ -32,6 +32,7 @@ class Console
     player = registration
     score = game
     save_result(player, score) if score
+    start_new_game
   end
 
   def registration
@@ -94,9 +95,24 @@ class Console
     loop do
       case input.save_result
       when YES_KEYWORD
-        # statistic.save(player, score)
+        statistic.save(player, score)
+        return
       when NO_KEYWORD
         return
+      else
+        output.show(error.unexpected_command)
+      end
+    end
+  end
+
+  def start_new_game
+    loop do
+      case input.start_new_game
+      when YES_KEYWORD
+        start
+      when NO_KEYWORD
+        output.exit
+        exit
       else
         output.show(error.unexpected_command)
       end

@@ -26,3 +26,24 @@
 :used_attempts: 1
 :total_hints: 3
 :used_hints: 0
+---
+:name: sda
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 1
+:total_hints: 3
+:used_hints: 0
+---
+:name: mymyheyhey
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 1
+:total_hints: 3
+:used_hints: 0
+---
+:name: laptop dell
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 2
+:total_hints: 3
+:used_hints: 1

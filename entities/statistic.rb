@@ -4,16 +4,11 @@ class Statistic
   def initialize
     @table = I18n.t(:table)
   end
-  
-  # def initialize(player, game_result)
-  #   @name = player.name
-  #   @difficulty = player.difficulty[:difficulty]
-  #   @total_attempts = game_result[:total_attempts]
-  #   @used_attempts = game_result[:used_attempts]
-  #   @total_hints = game_result[:total_hints]
-  #   @used_hints = game_result[:used_hints]
-  #   save
-  # end
+
+  def save(player, score)
+    new_record = record(player, score)
+    save_to_file(new_record)
+  end
 
   def rating_table
     table = Terminal::Table.new
@@ -21,10 +16,6 @@ class Statistic
     table.headings = @table[:headings]
     table.rows = rows
     table
-  end
-
-  def save
-    File.open(STATISTIC_YML, 'a') { |file| file.write statistic_hash.to_yaml }
   end
 
   private
@@ -47,14 +38,18 @@ class Statistic
     YAML.load_stream(File.read(STATISTIC_YML)).sort_by { |statistic| statistic[:difficulty] }
   end
 
-  # def statistic_hash
-  #   {
-  #     name: @name,
-  #     difficulty: @difficulty,
-  #     total_attempts: @total_attempts,
-  #     used_attempts: @used_attempts,
-  #     total_hints: @total_hints,
-  #     used_hints: @used_hints
-  #   }
-  # end
+  def record(player, score)
+    {
+      name: player.name,
+      difficulty: score.difficulty,
+      total_attempts: score.total_attempts,
+      used_attempts: score.used_attempts,
+      total_hints: score.total_hints,
+      used_hints: score.used_hints
+    }
+  end
+
+  def save_to_file(record)
+    File.open(STATISTIC_YML, 'a') { |file| file.write record.to_yaml }
+  end
 end
