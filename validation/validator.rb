@@ -11,7 +11,11 @@ module Validator
     end
 
     def check_hints_quantity(game)
-      game.used_hints.to_i >= game.total_hints
+      game.used_hints >= game.total_hints
+    end
+
+    def check_attempts_quantity(game)
+      game.used_attempts == game.total_attempts
     end
 
     def check_hint(argument)
@@ -20,6 +24,10 @@ module Validator
 
     def check_secret_code_length(argument)
       argument.length == SECRET_CODE_LENGTH
+    end
+
+    def check_win_combination(argument)
+      argument == WIN_COMBINATION
     end
 
     def check_secret_code_digits_range(argument)

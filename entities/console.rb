@@ -47,7 +47,7 @@ class Console
   def game
     game = Game.new(select_difficulty)
     output.game_start_header
-    guess(game, secret_code.secret_code)
+    guess(game)
   end
 
   def select_difficulty
@@ -65,9 +65,17 @@ class Console
     end
   end
 
-  def guess(game, code)
+  def guess(game)
+    puts secret_code.secret_code
     loop do
-      guess_secret_code(game)
+      output.statistics(game)
+      input_code = guess_secret_code(game)
+      game.increment_used_attempts
+      mark_guess = secret_code.mark_guess(input_code)
+      return win(game) if Validator.check_win_combination(mark_guess)
+
+      output.show(mark_guess)
+      return if Validator.check_attempts_quantity(game)
     end
   end
 
@@ -77,20 +85,25 @@ class Console
 
   def guess_secret_code(game)
     loop do
-      output.statistics(game)
       input_code = input.secret_code
       secret_code.validate(input_code)
       next use_hint(game) if Validator.check_hint(input_code)
       return input_code if secret_code.errors.empty?
 
       output.show(secret_code.errors)
+      input_code
     end
+  end
+
+  def win(game)
+    
   end
 
   def use_hint(game)
     return output.show(error.hints_limit) if Validator.check_hints_quantity(game)
 
     game.increment_used_hints
+    output.statistics(game)
     output.show(secret_code.hint)
   end
 

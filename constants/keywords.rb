@@ -9,6 +9,7 @@ HINT_COMMAND = 'hint'
 EASY_KEYWORD = 'easy'
 MEDIUM_KEYWORD = 'medium'
 HARD_KEYWORD = 'hard'
-
 YES_KEYWORD = 'yes'
 NO_KEYWORD = 'no'
+
+WIN_COMBINATION = '++++'

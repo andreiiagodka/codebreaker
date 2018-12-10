@@ -20,8 +20,8 @@ class SecretCode
     @cloned_code.shift
   end
 
-  def mark_guess(input, generated)
-    marked_guess = find_matches(input, generated)
+  def mark_guess(input_code, secret_code = @secret_code)
+    marked_guess = find_matches(input_code, secret_code)
     convert_guess(marked_guess)
   end
 
