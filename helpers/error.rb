@@ -29,12 +29,12 @@ class Error
     error(:secret_code_format)
   end
 
-  def secret_code_digit_range
-    error(:secret_code_digit_range)
+  def secret_code_digits_range
+    error(:secret_code_digits_range)
   end
 
   def hints_limit
-    puts error(:hints_limit)
+    error(:hints_limit)
   end
 
   def attempts_limit

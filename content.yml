@@ -23,7 +23,7 @@ en:
     player_name_length: Player name min size - 3, max - 20
     secret_code_length: 4 elements are required!
     secret_code_format: Only digits are required!
-    secret_code_digit_range: Each digit has to be in range 1-6!
+    secret_code_digits_range: Each digit has to be in range 1-6!
     hints_limit: You are out of hints!
     attempts_limit: You are out of attempts!
 

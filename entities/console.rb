@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'pry'
 class Console
   def start
     output.introduction
@@ -45,7 +45,9 @@ class Console
   end
 
   def game
-    Game.new(select_difficulty)
+    game = Game.new(select_difficulty)
+    output.game_start_header
+    guess(game, secret_code.secret_code)
   end
 
   def select_difficulty
@@ -63,12 +65,41 @@ class Console
     end
   end
 
+  def guess(game, code)
+    loop do
+      guess_secret_code(game)
+    end
+  end
+
   def rating
     output.show(statistic.rating_table)
   end
 
+  def guess_secret_code(game)
+    loop do
+      output.statistics(game)
+      input_code = input.secret_code
+      secret_code.validate(input_code)
+      next use_hint(game) if Validator.check_hint(input_code)
+      return input_code if secret_code.errors.empty?
+
+      output.show(secret_code.errors)
+    end
+  end
+
+  def use_hint(game)
+    return output.show(error.hints_limit) if Validator.check_hints_quantity(game)
+
+    game.increment_used_hints
+    output.show(secret_code.hint)
+  end
+
   def statistic
     @statistic ||= Statistic.new
+  end
+
+  def secret_code
+    @secret_code ||= SecretCode.new
   end
 
   def output

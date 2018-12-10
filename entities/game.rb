@@ -3,18 +3,15 @@
 class Game
   attr_reader :total_attempts, :used_attempts, :total_hints, :used_hints
 
-  def initialize(difficulty, used_attempts = 0, used_hints = 0)
+  def initialize(difficulty)
     @total_attempts = difficulty[:attempts]
-    @used_attempts = used_attempts
+    @used_attempts = 0
     @total_hints = difficulty[:hints]
-    @used_hints = used_hints
+    @used_hints = 0
   end
 
-  def start
-    Output.game_start_header
-    generated = SecretCode.generate
-    puts generated
-    gameflow(generated)
+  def increment_used_hints
+    @used_hints += 1
   end
 
   private
@@ -34,23 +31,6 @@ class Game
     end
   end
 
-  def input_secret_code
-    loop do
-      input = Input.secret_code
-      validated = Validator.secret_code(input)
-      return input if check_hint(input) || validated.nil?
-
-      Output.show(validated)
-    end
-  end
-
-  def use_hint(cloned)
-    return Error.hints_limit if check_hints
-
-    increment_used_hints
-    Output.show(cloned.shift)
-  end
-
   def win
     Output.win
     {
@@ -67,10 +47,6 @@ class Game
     {win: false}
   end
 
-  def check_hint(argument)
-    argument == HINT_KEYWORD
-  end
-
   def check_winning_combination(argument)
     argument == WINNING_COMBINATION
   end
@@ -79,15 +55,7 @@ class Game
     @used_attempts == @total_attempts
   end
 
-  def check_hints
-    @used_hints >= @total_hints
-  end
-
   def increment_used_attempts
     @used_attempts += 1
-  end
-
-  def increment_used_hints
-    @used_hints += 1
   end
 end
