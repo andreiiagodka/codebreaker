@@ -30,7 +30,8 @@ class Console
 
   def gameplay
     player = registration
-    game
+    score = game
+    save_result(player, score) if score
   end
 
   def registration
@@ -72,15 +73,34 @@ class Console
       input_code = guess_secret_code(game)
       game.increment_used_attempts
       mark_guess = secret_code.mark_guess(input_code)
-      return win(game) if Validator.check_win_combination(mark_guess)
+      if Validator.check_win_combination(mark_guess)
+        output.win
+        return game
+      end
 
       output.show(mark_guess)
-      return if Validator.check_attempts_quantity(game)
+      if Validator.check_attempts_quantity(game)
+        output.show(error.attempts_limit)
+        return
+      end
     end
   end
 
   def rating
     output.show(statistic.rating_table)
+  end
+
+  def save_result(player, score)
+    loop do
+      case input.save_result
+      when YES_KEYWORD
+        # statistic.save(player, score)
+      when NO_KEYWORD
+        return
+      else
+        output.show(error.unexpected_command)
+      end
+    end
   end
 
   def guess_secret_code(game)
@@ -93,10 +113,6 @@ class Console
       output.show(secret_code.errors)
       input_code
     end
-  end
-
-  def win(game)
-    
   end
 
   def use_hint(game)

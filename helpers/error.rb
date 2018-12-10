@@ -10,7 +10,7 @@ class Error
   end
 
   def unexpected_command
-    puts error(:unexpected_command)
+    error(:unexpected_command)
   end
 
   def unexpected_difficulty
@@ -38,7 +38,7 @@ class Error
   end
 
   def attempts_limit
-    puts error(:attempts_limit)
+    error(:attempts_limit)
   end
 
   private
