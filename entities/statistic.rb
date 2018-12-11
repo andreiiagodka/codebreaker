@@ -15,7 +15,7 @@ class Statistic
     table.title = @table[:title]
     table.headings = @table[:headings]
     table.rows = table_rows
-    puts table
+    table
   end
 
   private

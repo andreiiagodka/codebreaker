@@ -5,10 +5,6 @@ class Output
     @output = I18n.t(:output)
   end
 
-  def show(argument)
-    puts argument
-  end
-
   def introduction
     show_in_console(:introduction)
   end
@@ -42,7 +38,7 @@ class Output
   end
 
   def statistics(game)
-    show("Used attempts: #{attempts(game)}. Used hints: #{hints(game)}.")
+    puts "Used attempts: #{attempts(game)}. Used hints: #{hints(game)}."
   end
 
   private

@@ -7,7 +7,7 @@ module Validator
     end
 
     def check_integer(argument)
-      true if Integer(argument) rescue false
+      argument.to_i.to_s == argument
     end
 
     def check_hints_quantity(game)

@@ -19,7 +19,7 @@ class Console
     case input.input.downcase
     when START_COMMAND then gameplay
     when RULES_COMMAND then output.rules
-    when STATS_COMMAND then statistic.rating_table
+    when STATS_COMMAND then puts statistic.rating_table
     when EXIT_COMMAND then exit_from_console
     else puts fault.get(:unexpected_option)
     end
@@ -39,7 +39,7 @@ class Console
       player.validate
       return player if player.errors.empty?
 
-      output.show(player.errors)
+      puts player.errors
     end
   end
 
@@ -56,7 +56,7 @@ class Console
       when EASY_KEYWORD then return EASY_DIFFICULTY
       when MEDIUM_KEYWORD then return MEDIUM_DIFFICULTY
       when HARD_KEYWORD then return HARD_DIFFICULTY
-      else puts get(:unexpected_difficulty)
+      else puts fault.get(:unexpected_difficulty)
       end
     end
   end
@@ -85,33 +85,34 @@ class Console
     loop do
       output.statistics(game)
       input_code = guess_secret_code(game)
-      game.increment_used_attempts
-      mark_guess = secret_code.mark_guess(input_code)
+      mark_guess = game.mark_guess(input_code)
       if Validator.check_win_combination(mark_guess)
         output.win
         return game
       end
-      output.show(mark_guess)
-      return output.show(fault.get(:attempts_limit)) if Validator.check_attempts_quantity(game)
+      puts mark_guess
+      return puts fault.get(:attempts_limit) if Validator.check_attempts_quantity(game)
     end
   end
 
   def guess_secret_code(game)
     loop do
       input_code = input.secret_code
-      game.is_valid_secret_code?(input_code)
       next use_hint(game) if Validator.check_hint(input_code)
+
+      game.validate_secret_code(input_code)
       return input_code if game.errors.empty?
 
-      output.show(game.errors)
+      puts game.errors
+      input_code
     end
   end
 
   def use_hint(game)
-    return output.show(fault.get(:hints_limit)) if Validator.check_hints_quantity(game)
+    return puts fault.get(:hints_limit) if Validator.check_hints_quantity(game)
 
     output.statistics(game)
-    output.show(game.hint)
+    puts game.hint
   end
 
   def exit_from_console
@@ -121,10 +122,6 @@ class Console
 
   def statistic
     @statistic ||= Statistic.new
-  end
-
-  def secret_code
-    @secret_code ||= SecretCode.new
   end
 
   def output
