@@ -5,7 +5,6 @@ require 'yaml'
 require 'i18n'
 require 'terminal-table'
 
-
 require_all './helpers'
 require_all './constants'
 require_all './entities'

@@ -1,32 +1,29 @@
 # frozen_string_literal: true
-require 'pry'
+
 class Console
   def start
     output.introduction
     options
   end
 
+  private
+
   def options
-    output.options
-    case input.input.downcase
-    when START_COMMAND
-      gameplay
-    when RULES_COMMAND
-      output.rules
-      options
-    when STATS_COMMAND
-      rating
-      options
-    when EXIT_COMMAND
-      output.exit
-      exit
-    else
-      output.show(error.unexpected_option)
-      options
+    loop do
+      output.options
+      option_cases
     end
   end
 
-  private
+  def option_cases
+    case input.input.downcase
+    when START_COMMAND then gameplay
+    when RULES_COMMAND then output.rules
+    when STATS_COMMAND then statistic.rating_table
+    when EXIT_COMMAND then exit_from_console
+    else puts fault.get(:unexpected_option)
+    end
+  end
 
   def gameplay
     player = registration
@@ -53,22 +50,38 @@ class Console
   end
 
   def select_difficulty
-    output.difficulty_header
-    case input.difficulty.downcase
-    when EASY_KEYWORD
-      EASY_DIFFICULTY
-    when MEDIUM_KEYWORD
-      MEDIUM_DIFFICULTY
-    when HARD_KEYWORD
-      HARD_DIFFICULTY
-    else
-      output.show(error.unexpected_difficulty)
-      select_difficulty
+    loop do
+      output.difficulty_header
+      case input.difficulty.downcase
+      when EASY_KEYWORD then return EASY_DIFFICULTY
+      when MEDIUM_KEYWORD then return MEDIUM_DIFFICULTY
+      when HARD_KEYWORD then return HARD_DIFFICULTY
+      else puts get(:unexpected_difficulty)
+      end
+    end
+  end
+
+  def save_result(player, score)
+    loop do
+      case input.save_result
+      when YES_KEYWORD then return statistic.save(player, score)
+      when NO_KEYWORD then return
+      else fault.unexpected_command
+      end
+    end
+  end
+
+  def start_new_game
+    loop do
+      case input.start_new_game
+      when YES_KEYWORD then start
+      when NO_KEYWORD then exit_from_console
+      else fault.unexpected_command
+      end
     end
   end
 
   def guess(game)
-    puts secret_code.secret_code
     loop do
       output.statistics(game)
       input_code = guess_secret_code(game)
@@ -78,65 +91,32 @@ class Console
         output.win
         return game
       end
-
       output.show(mark_guess)
-      if Validator.check_attempts_quantity(game)
-        output.show(error.attempts_limit)
-        return
-      end
-    end
-  end
-
-  def rating
-    output.show(statistic.rating_table)
-  end
-
-  def save_result(player, score)
-    loop do
-      case input.save_result
-      when YES_KEYWORD
-        statistic.save(player, score)
-        return
-      when NO_KEYWORD
-        return
-      else
-        output.show(error.unexpected_command)
-      end
-    end
-  end
-
-  def start_new_game
-    loop do
-      case input.start_new_game
-      when YES_KEYWORD
-        start
-      when NO_KEYWORD
-        output.exit
-        exit
-      else
-        output.show(error.unexpected_command)
-      end
+      return output.show(fault.get(:attempts_limit)) if Validator.check_attempts_quantity(game)
     end
   end
 
   def guess_secret_code(game)
     loop do
       input_code = input.secret_code
-      secret_code.validate(input_code)
+      game.is_valid_secret_code?(input_code)
       next use_hint(game) if Validator.check_hint(input_code)
-      return input_code if secret_code.errors.empty?
+      return input_code if game.errors.empty?
 
-      output.show(secret_code.errors)
-      input_code
+      output.show(game.errors)
     end
   end
 
   def use_hint(game)
-    return output.show(error.hints_limit) if Validator.check_hints_quantity(game)
+    return output.show(fault.get(:hints_limit)) if Validator.check_hints_quantity(game)
 
-    game.increment_used_hints
     output.statistics(game)
-    output.show(secret_code.hint)
+    output.show(game.hint)
+  end
+
+  def exit_from_console
+    output.exit
+    exit
   end
 
   def statistic
@@ -155,7 +135,7 @@ class Console
     @input ||= Input.new
   end
 
-  def error
-    @error ||= Error.new
+  def fault
+    @fault ||= Fault.new
   end
 end

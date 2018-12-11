@@ -14,24 +14,26 @@ class Statistic
     table = Terminal::Table.new
     table.title = @table[:title]
     table.headings = @table[:headings]
-    table.rows = rows
-    table
+    table.rows = table_rows
+    puts table
   end
 
   private
 
-  def rows
-    load.each_with_index.map { |record, index|
-      [
-        index + 1,
-        record[:name],
-        record[:difficulty],
-        record[:total_attempts],
-        record[:used_attempts],
-        record[:total_hints],
-        record[:used_hints]
-      ]
-    }
+  def table_rows
+    load.each_with_index.map { |record, index| rows(record, index) }
+  end
+
+  def rows(record, index)
+    [
+      index + 1,
+      record[:name],
+      record[:difficulty],
+      record[:total_attempts],
+      record[:used_attempts],
+      record[:total_hints],
+      record[:used_hints]
+    ]
   end
 
   def load

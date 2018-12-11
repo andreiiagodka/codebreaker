@@ -47,3 +47,38 @@
 :used_attempts: 2
 :total_hints: 3
 :used_hints: 1
+---
+:name: easy
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 7
+:total_hints: 3
+:used_hints: 0
+---
+:name: sadas
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 1
+:total_hints: 3
+:used_hints: 0
+---
+:name: adsda
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 1
+:total_hints: 3
+:used_hints: 0
+---
+:name: asda
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 1
+:total_hints: 3
+:used_hints: 0
+---
+:name: teacoffe
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 9
+:total_hints: 3
+:used_hints: 3

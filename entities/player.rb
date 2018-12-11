@@ -9,12 +9,12 @@ class Player
   end
 
   def validate(name = @name)
-    @errors << error_phrase.player_name_length unless Validator.check_name_length(name)
+    @errors << fault.get(:player_name_length) unless Validator.check_name_length(name)
   end
 
   private
 
-  def error_phrase
-    @error_phrase ||= Error.new
+  def fault
+    @fault ||= Fault.new
   end
 end

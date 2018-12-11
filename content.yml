@@ -16,7 +16,7 @@ en:
     save_result: Would you like to save result of the game? [yes/no]
     start_new_game: Would you like to start a new game? [yes/no]
 
-  error:
+  fault:
     unexpected_option: You have passed unexpected option. Please choose one from listed options.
     unexpected_command: You have passed unexpected command. Please choose one from listed options.
     unexpected_difficulty: You have passed unexpected difficulty. Please choose one from listed difficulties.
