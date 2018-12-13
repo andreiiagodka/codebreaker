@@ -6,15 +6,6 @@ class Console
     options
   end
 
-  private
-
-  def options
-    loop do
-      puts output.get(:options)
-      option_cases
-    end
-  end
-
   def option_cases
     case input.input.downcase
     when START_COMMAND then gameplay
@@ -24,6 +15,8 @@ class Console
     else puts fault.get(:unexpected_option)
     end
   end
+
+  private
 
   def gameplay
     player = registration

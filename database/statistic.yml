@@ -82,3 +82,10 @@
 :used_attempts: 9
 :total_hints: 3
 :used_hints: 3
+---
+:name: sada
+:difficulty: easy
+:total_attempts: 15
+:used_attempts: 14
+:total_hints: 3
+:used_hints: 2

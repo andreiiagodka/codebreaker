@@ -12,3 +12,5 @@ gem 'pry'
 gem 'require_all', '~> 2.0'
 gem 'rubocop', require: false
 gem 'terminal-table'
+gem 'simplecov', require: false, group: :test
+gem "rspec", "~> 3.7"
