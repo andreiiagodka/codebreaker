@@ -2,7 +2,7 @@
 
 class Console
   def start
-    output.introduction
+    puts output.get(:introduction)
     options
   end
 
@@ -10,7 +10,7 @@ class Console
 
   def options
     loop do
-      output.options
+      puts output.get(:options)
       option_cases
     end
   end
@@ -18,7 +18,7 @@ class Console
   def option_cases
     case input.input.downcase
     when START_COMMAND then gameplay
-    when RULES_COMMAND then output.rules
+    when RULES_COMMAND then puts output.get(:rules)
     when STATS_COMMAND then puts statistic.rating_table
     when EXIT_COMMAND then exit_from_console
     else puts fault.get(:unexpected_option)
@@ -33,7 +33,7 @@ class Console
   end
 
   def registration
-    output.registration_header
+    puts output.get(:registration_header)
     loop do
       player = Player.new(input.player_name)
       player.validate
@@ -45,13 +45,13 @@ class Console
 
   def game
     game = Game.new(select_difficulty)
-    output.game_start_header
+    puts output.get(:game_start_header)
     guess(game)
   end
 
   def select_difficulty
     loop do
-      output.difficulty_header
+      puts output.get(:difficulty_header)
       case input.difficulty.downcase
       when EASY_KEYWORD then return EASY_DIFFICULTY
       when MEDIUM_KEYWORD then return MEDIUM_DIFFICULTY
@@ -87,7 +87,7 @@ class Console
       input_code = guess_secret_code(game)
       mark_guess = game.mark_guess(input_code)
       if Validator.check_win_combination(mark_guess)
-        output.win
+        puts output.get(:win)
         return game
       end
       puts mark_guess
@@ -116,7 +116,7 @@ class Console
   end
 
   def exit_from_console
-    output.exit
+    puts output.get(:exit)
     exit
   end
 

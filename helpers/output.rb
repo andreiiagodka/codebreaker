@@ -5,36 +5,8 @@ class Output
     @output = I18n.t(:output)
   end
 
-  def introduction
-    show_in_console(:introduction)
-  end
-
-  def options
-    show_in_console(:options)
-  end
-
-  def rules
-    show_in_console(:rules)
-  end
-
-  def exit
-    show_in_console(:exit)
-  end
-
-  def registration_header
-    show_in_console(:registration_header)
-  end
-
-  def difficulty_header
-    show_in_console(:difficulty_header)
-  end
-
-  def game_start_header
-    show_in_console(:game_start_header)
-  end
-
-  def win
-    show_in_console(:win)
+  def get(argument, output = @output)
+    output[argument]
   end
 
   def statistics(game)
@@ -42,10 +14,6 @@ class Output
   end
 
   private
-
-  def show_in_console(phrase)
-    puts @output[phrase]
-  end
 
   def attempts(game)
     "#{game.used_attempts}/#{game.total_attempts}"
