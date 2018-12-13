@@ -8,4 +8,12 @@ RSpec.describe Player do
   describe '.new' do
     it { expect(subject.name).to eq(name) }
   end
+
+  describe '#validate' do
+    it 'check invalid name' do
+      subject.validate(invalid_name[:short])
+      subject.validate(invalid_name[:long])
+      expect(subject.errors).not_to be_empty
+    end
+  end
 end

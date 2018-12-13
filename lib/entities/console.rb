@@ -6,8 +6,6 @@ class Console
     options
   end
 
-  private
-
   def options
     loop do
       puts output.get(:options)
