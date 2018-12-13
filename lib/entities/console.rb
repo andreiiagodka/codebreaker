@@ -6,6 +6,15 @@ class Console
     options
   end
 
+  private
+
+  def options
+    loop do
+      puts output.get(:options)
+      option_cases
+    end
+  end
+
   def option_cases
     case input.input.downcase
     when START_COMMAND then gameplay
@@ -15,8 +24,6 @@ class Console
     else puts fault.get(:unexpected_option)
     end
   end
-
-  private
 
   def gameplay
     player = registration
@@ -78,20 +85,20 @@ class Console
     loop do
       output.statistics(game)
       input_code = guess_secret_code(game)
-      mark_guess = game.mark_guess(input_code)
-      if Validator.check_win_combination(mark_guess)
+      marked_guess = game.mark_guess(input_code)
+      if game.win?(marked_guess)
         puts output.get(:win)
         return game
       end
-      puts mark_guess
-      return puts fault.get(:attempts_limit) if Validator.check_attempts_quantity(game)
+      puts marked_guess
+      return puts fault.get(:attempts_limit) if game.loss?
     end
   end
 
   def guess_secret_code(game)
     loop do
       input_code = input.secret_code
-      next use_hint(game) if Validator.check_hint(input_code)
+      next show_hint(game) if game.hint?(input_code)
 
       game.validate_secret_code(input_code)
       return input_code if game.errors.empty?
@@ -101,11 +108,11 @@ class Console
     end
   end
 
-  def use_hint(game)
-    return puts fault.get(:hints_limit) if Validator.check_hints_quantity(game)
+  def show_hint(game)
+    return puts fault.get(:hints_limit) if game.hints_limit?
 
     output.statistics(game)
-    puts game.hint
+    puts game.use_hint
   end
 
   def exit_from_console

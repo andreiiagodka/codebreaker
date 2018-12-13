@@ -21,7 +21,15 @@ class Game
     @errors << fault.get(:secret_code_digits_range) unless Validator.check_secret_code_digits_range(input_code)
   end
 
-  def hint
+  def hint?(input_code)
+    Validator.check_hint(input_code)
+  end
+
+  def hints_limit?
+    Validator.check_hints_quantity(self)
+  end
+
+  def use_hint
     increment_used_hints
     @shuffled_code.shift
   end
@@ -34,6 +42,14 @@ class Game
     exact_match(input_digits, cloned_code, marked_guess)
     number_match(input_digits, cloned_code, marked_guess)
     convert_guess(marked_guess)
+  end
+
+  def win?(marked_guess)
+    Validator.check_win_combination(marked_guess)
+  end
+
+  def loss?
+    Validator.check_attempts_quantity(self)
   end
 
   private
