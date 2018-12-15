@@ -37,6 +37,10 @@ class Fault
     get(:secret_code_digits_range)
   end
 
+  def hints_limit
+    get(:hints_limit)
+  end
+
   private
 
   def get(argument, fault = @fault)

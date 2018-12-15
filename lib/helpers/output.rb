@@ -43,12 +43,9 @@ class Output
     show_in_console(:exit)
   end
 
-  def input_secret_code
-    print @output[:input_secret_code] + ': '
-  end
-
   def statistics(game)
     puts "Used attempts: #{attempts(game)}. Used hints: #{hints(game)}."
+    print @output[:input_secret_code] + ': '
   end
 
   private

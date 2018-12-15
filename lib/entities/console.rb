@@ -14,7 +14,7 @@ class Console
   end
 
   def option_cases
-    case input.input.downcase
+    case input.input
     when START_COMMAND then registration
     when RULES_COMMAND then output.rules
     when STATS_COMMAND then output.show(statistic.rating_table)
@@ -22,13 +22,6 @@ class Console
     else output.show(fault.unexpected_option)
     end
   end
-
-  # def gameplay
-  #   player = registration
-  #   score = game
-  #   save_result(player, score) if score
-  #   start_new_game
-  # end
 
   def registration
     loop do
@@ -47,15 +40,51 @@ class Console
   end
 
   def game
-    game = Game.new(@difficulty)
+    @game = Game.new(@difficulty.level)
     output.game_start_header
-    guess(game)
+    guess
   end
 
-  def save_result(player, score)
+  def guess
+    loop do
+      output.statistics(@game)
+      @guess = validate_entity(Guess)
+      return guess_continue if @guess.is_a? Guess
+    end
+  end
+
+  def guess_continue
+    @guess.hint? ? show_hint : guess_result
+    guess
+  end
+
+  def show_hint
+    @game.hints_limit? ? output.show(fault.hints_limit) : output.show(@game.use_hint)
+  end
+
+  def guess_result
+    @game.increment_used_attempts
+    marked_guess = @guess.mark_guess(@game.secret_code)
+    output.show(marked_guess)
+    return win if @game.win?(marked_guess)
+    return loss if @game.loss?
+  end
+
+  def win
+    output.win
+    save_result
+    start_new_game
+  end
+
+  def loss
+    output.show(fault.attempts_limit)
+    start_new_game
+  end
+
+  def save_result
     loop do
       case input.save_result
-      when YES_KEYWORD then return statistic.save(player, score)
+      when YES_KEYWORD then return statistic.save(@player, @game)
       when NO_KEYWORD then return
       else output.show(fault.unexpected_command)
       end
@@ -72,45 +101,6 @@ class Console
     end
   end
 
-  def guess(game)
-    loop do
-      output.statistics(game)
-      input_code = guess_secret_code(game)
-      marked_guess = game.mark_guess(input_code)
-      if game.win?(marked_guess)
-        output.win
-        return game
-      end
-      puts marked_guess
-      return output.show(fault.attempts_limit) if game.loss?
-    end
-  end
-
-  def guess_secret_code(game)
-    loop do
-      input_code = input.secret_code
-      next show_hint(game) if game.hint?(input_code)
-       game.validate_secret_code(input_code)
-      return input_code if game.errors.empty?
-       puts game.errors
-      input_code
-    end
-  end
-
-  # def continue_attempt(guess, game)
-  #   marked_guess = guess.mark_guess(game.secret_code)
-  #   output.show(marked_guess)
-  #   return win(game) if game.win?(marked_guess)
-  #   return loss if game.loss?
-  # end
-
-  def show_hint(game)
-    return output.show(fault.hints_limit) if game.hints_limit?
-
-    output.statistics(game)
-    output.show(game.use_hint)
-  end
-
   def validate_entity(klass)
     loop do
       entity = klass.new(user_input)
@@ -123,17 +113,6 @@ class Console
   def user_input
     input_value = input.input
     Validator.check_exit(input_value) ? exit_from_console : input_value
-  end
-
-  def win(game)
-    output.win
-    save_result(@player, game)
-    start_new_game
-  end
-
-  def loss
-    output.show(fault.attempts_limit)
-    start_new_game
   end
 
   def exit_from_console
