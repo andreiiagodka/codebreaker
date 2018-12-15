@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ValidatedEntity
-  include Validator
-
   def initialize
     @errors = []
   end

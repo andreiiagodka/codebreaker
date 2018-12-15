@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class Statistic
+  DB_DIR = 'database/'
+  YML_FORMAT = '.yml'
+
+  STATISTIC_YML = DB_DIR + 'statistic' + YML_FORMAT
+
   def initialize
     @table = I18n.t(:table)
   end

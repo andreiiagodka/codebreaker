@@ -1,9 +1,0 @@
-# frozen_string_literal: true
-
-NAME_MIN_LENGTH = 3
-NAME_MAX_LENGTH = 20
-
-SECRET_CODE_LENGTH = 4
-
-ELEMENT_MIN_VALUE = 1
-ELEMENT_MAX_VALUE = 6

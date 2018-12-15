@@ -3,6 +3,14 @@
 class Guess < ValidatedEntity
   attr_reader :guess_code, :errors
 
+  SECRET_CODE_LENGTH = 4
+  ELEMENT_MIN_VALUE = 1
+  ELEMENT_MAX_VALUE = 6
+
+  HINT = 'hint'
+  PLUS = '+'
+  MINUS = '-'
+
   def initialize(guess_code)
     super()
     @guess_code = guess_code
@@ -11,13 +19,9 @@ class Guess < ValidatedEntity
   def validate
     return if hint?
 
-    @errors << fault.secret_code_format unless Validator.check_integer(@guess_code)
-    @errors << fault.secret_code_length unless Validator.check_secret_code_length(@guess_code)
-    @errors << fault.secret_code_digits_range unless Validator.check_secret_code_digits_range(@guess_code)
-  end
-
-  def hint?
-    Validator.check_hint(@guess_code)
+    @errors << fault.secret_code_format unless check_integer
+    @errors << fault.secret_code_length unless check_length
+    @errors << fault.secret_code_digits_range unless check_digits_range
   end
 
   def mark_guess(secret_code)
@@ -30,6 +34,10 @@ class Guess < ValidatedEntity
     convert_guess(marked_guess)
   end
 
+  def hint?
+    @guess_code == HINT
+  end
+
   private
 
   def convert_input(guess_code)
@@ -40,7 +48,7 @@ class Guess < ValidatedEntity
     input_digits.each_with_index do |digit, index|
       next unless digit == @secret_code[index]
 
-      marked_guess << '+'
+      marked_guess << PLUS
       remove_digit(digit, cloned_code)
     end
   end
@@ -49,7 +57,7 @@ class Guess < ValidatedEntity
     cloned_code.each do |digit|
       next unless input_digits.include? digit
 
-      marked_guess << '-'
+      marked_guess << MINUS
     end
   end
 
@@ -59,5 +67,17 @@ class Guess < ValidatedEntity
 
   def remove_digit(digit, cloned_code)
     cloned_code.delete_at(cloned_code.index(digit))
+  end
+
+  def check_integer
+    @guess_code.to_i.to_s == @guess_code
+  end
+
+  def check_length
+    @guess_code.length == SECRET_CODE_LENGTH
+  end
+
+  def check_digits_range
+    @guess_code.each_char { |digit| break unless digit.to_i.between?(ELEMENT_MIN_VALUE, ELEMENT_MAX_VALUE) }
   end
 end

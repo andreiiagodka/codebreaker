@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 class Console
+  COMMANDS = {
+    start: 'start',
+    rules: 'rules',
+    stats: 'stats',
+    exit: 'exit'
+  }.freeze
+
+  YES_KEYWORD = 'yes'
+  NO_KEYWORD = 'no'
+
   def start
     output.introduction
     options
@@ -14,11 +24,10 @@ class Console
   end
 
   def option_cases
-    case input.input
-    when START_COMMAND then registration
-    when RULES_COMMAND then output.rules
-    when STATS_COMMAND then output.show(statistic.rating_table)
-    when EXIT_COMMAND then exit_from_console
+    case user_input
+    when COMMANDS[:start] then registration
+    when COMMANDS[:rules] then output.rules
+    when COMMANDS[:stats] then output.show(statistic.rating_table)
     else output.show(fault.unexpected_option)
     end
   end
@@ -112,7 +121,7 @@ class Console
 
   def user_input
     input_value = input.input
-    Validator.check_exit(input_value) ? exit_from_console : input_value
+    input_value == COMMANDS[:exit] ? exit_from_console : input_value
   end
 
   def exit_from_console
