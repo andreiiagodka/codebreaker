@@ -16,9 +16,9 @@ class Game
 
   def validate_secret_code(input_code)
     clear_errors
-    @errors << fault.get(:secret_code_format) unless Validator.check_integer(input_code)
-    @errors << fault.get(:secret_code_length) unless Validator.check_secret_code_length(input_code)
-    @errors << fault.get(:secret_code_digits_range) unless Validator.check_secret_code_digits_range(input_code)
+    @errors << fault.secret_code_format unless Validator.check_integer(input_code)
+    @errors << fault.secret_code_length unless Validator.check_secret_code_length(input_code)
+    @errors << fault.secret_code_digits_range unless Validator.check_secret_code_digits_range(input_code)
   end
 
   def hint?(input_code)
