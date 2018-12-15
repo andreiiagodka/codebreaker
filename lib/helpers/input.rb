@@ -6,7 +6,7 @@ class Input
   end
 
   def input
-    gets.chomp
+    gets.chomp.downcase
   end
 
   def player_name

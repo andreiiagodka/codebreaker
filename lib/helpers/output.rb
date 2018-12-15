@@ -23,6 +23,7 @@ class Output
 
   def registration_header
     show_in_console(:registration_header)
+    print @output[:player_name_registration] + ': '
   end
 
   def game_start_header
@@ -41,14 +42,18 @@ class Output
     show_in_console(:exit)
   end
 
+  def input_secret_code
+    print @output[:input_secret_code] + ': '
+  end
+
   def statistics(game)
     puts "Used attempts: #{attempts(game)}. Used hints: #{hints(game)}."
   end
 
   private
 
-  def show_in_console(argument, output = @output)
-    puts output[argument]
+  def show_in_console(argument)
+    puts @output[argument]
   end
 
   def attempts(game)

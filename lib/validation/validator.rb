@@ -6,6 +6,10 @@ module Validator
       argument.length.between?(NAME_MIN_LENGTH, NAME_MAX_LENGTH)
     end
 
+    def check_exit(argument)
+      argument == COMMANDS[:exit]
+    end
+
     def check_integer(argument)
       argument.to_i.to_s == argument
     end

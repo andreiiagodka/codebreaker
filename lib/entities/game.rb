@@ -10,8 +10,8 @@ class Game
     @total_hints = difficulty[:hints]
     @used_hints = 0
     @secret_code = generate
-    @errors = []
     @shuffled_code = @secret_code.shuffle
+    @errors = []
   end
 
   def validate_secret_code(input_code)

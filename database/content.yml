@@ -7,10 +7,11 @@ en:
     registration_header: Codebreaker Registration
     difficulty_header: Choose difficulty
     game_start_header: The games has started! Try to guess secret code.
+    input_secret_code: Input secret code
+    player_name_registration: Input your name
     win: Congratulations! You have guessed it!
 
   input:
-    player_name_registration: Input your name
     difficulties: Easy, Medium, Hard
     input_secret_code: Input secret code
     save_result: Would you like to save result of the game? [yes/no]

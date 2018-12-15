@@ -31,13 +31,10 @@ class Console
   end
 
   def registration
-    output.registration_header
     loop do
-      player = Player.new(input.player_name)
-      player.validate
-      return player if player.errors.empty?
-
-      output.show(player.errors)
+      output.registration_header
+      entity = validate_entity(Player)
+      return entity if entity.is_a? Player
     end
   end
 
@@ -97,20 +94,50 @@ class Console
     loop do
       input_code = input.secret_code
       next show_hint(game) if game.hint?(input_code)
-
-      game.validate_secret_code(input_code)
+       game.validate_secret_code(input_code)
       return input_code if game.errors.empty?
-
-      output.show(game.errors)
+       puts game.errors
       input_code
     end
   end
+
+  # def continue_attempt(guess, game)
+  #   marked_guess = guess.mark_guess(game.secret_code)
+  #   output.show(marked_guess)
+  #   return win(game) if game.win?(marked_guess)
+  #   return loss if game.loss?
+  # end
 
   def show_hint(game)
     return output.show(fault.hints_limit) if game.hints_limit?
 
     output.statistics(game)
     output.show(game.use_hint)
+  end
+
+  def validate_entity(klass)
+    loop do
+      entity = klass.new(user_input)
+      return entity if entity.valid?
+
+      return output.show(entity.errors)
+    end
+  end
+
+  def user_input
+    input_value = input.input
+    Validator.check_hint(input_value) ? exit_from_console : input_value
+  end
+
+  def win(game)
+    output.win
+    save_result(@player, game)
+    start_new_game
+  end
+
+  def loss
+    output.show(fault.attempts_limit)
+    start_new_game
   end
 
   def exit_from_console
