@@ -10,6 +10,10 @@ module Validator
       argument == COMMANDS[:exit]
     end
 
+    def check_difficulty(argument)
+      DIFFICULTIES.key?(argument)
+    end
+
     def check_integer(argument)
       argument.to_i.to_s == argument
     end

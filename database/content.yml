@@ -9,10 +9,10 @@ en:
     game_start_header: The games has started! Try to guess secret code.
     input_secret_code: Input secret code
     player_name_registration: Input your name
+    difficulties: Easy, Medium, Hard
     win: Congratulations! You have guessed it!
 
   input:
-    difficulties: Easy, Medium, Hard
     input_secret_code: Input secret code
     save_result: Would you like to save result of the game? [yes/no]
     start_new_game: Would you like to start a new game? [yes/no]

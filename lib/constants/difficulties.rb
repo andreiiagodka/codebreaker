@@ -1,19 +1,21 @@
 # frozen_string_literal: true
 
-EASY_DIFFICULTY = {
-  difficulty: 'easy',
-  attempts: 15,
-  hints: 3
-}.freeze
+DIFFICULTIES = {
+  easy: {
+    level: 'easy',
+    attempts: 15,
+    hints: 3
+  },
 
-MEDIUM_DIFFICULTY = {
-  difficulty: 'medium',
-  attempts: 10,
-  hints: 2
-}.freeze
+  medium: {
+    level: 'medium',
+    attempts: 10,
+    hints: 1
+  },
 
-HARD_DIFFICULTY = {
-  difficulty: 'hard',
-  attempts: 5,
-  hints: 1
+  hard: {
+    level: 'hard',
+    attempts: 5,
+    hints: 1
+  }
 }.freeze

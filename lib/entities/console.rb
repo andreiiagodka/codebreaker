@@ -15,7 +15,7 @@ class Console
 
   def option_cases
     case input.input.downcase
-    when START_COMMAND then gameplay
+    when START_COMMAND then registration
     when RULES_COMMAND then output.rules
     when STATS_COMMAND then output.show(statistic.rating_table)
     when EXIT_COMMAND then exit_from_console
@@ -23,37 +23,33 @@ class Console
     end
   end
 
-  def gameplay
-    player = registration
-    score = game
-    save_result(player, score) if score
-    start_new_game
-  end
+  # def gameplay
+  #   player = registration
+  #   score = game
+  #   save_result(player, score) if score
+  #   start_new_game
+  # end
 
   def registration
     loop do
       output.registration_header
-      entity = validate_entity(Player)
-      return entity if entity.is_a? Player
+      @player = validate_entity(Player)
+      return select_difficulty if @player.is_a? Player
     end
-  end
-
-  def game
-    game = Game.new(select_difficulty)
-    output.game_start_header
-    guess(game)
   end
 
   def select_difficulty
     loop do
       output.difficulty_header
-      case input.difficulty.downcase
-      when EASY_KEYWORD then return EASY_DIFFICULTY
-      when MEDIUM_KEYWORD then return MEDIUM_DIFFICULTY
-      when HARD_KEYWORD then return HARD_DIFFICULTY
-      else output.show(fault.unexpected_difficulty)
-      end
+      @difficulty = validate_entity(Difficulty)
+      return game if @difficulty.is_a? Difficulty
     end
+  end
+
+  def game
+    game = Game.new(@difficulty)
+    output.game_start_header
+    guess(game)
   end
 
   def save_result(player, score)
@@ -126,7 +122,7 @@ class Console
 
   def user_input
     input_value = input.input
-    Validator.check_hint(input_value) ? exit_from_console : input_value
+    Validator.check_exit(input_value) ? exit_from_console : input_value
   end
 
   def win(game)

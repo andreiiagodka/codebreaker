@@ -11,10 +11,4 @@ class Player < ValidatedEntity
   def validate
     @errors << fault.player_name_length unless Validator.check_name_length(@name)
   end
-
-  private
-
-  def fault
-    @fault ||= Fault.new
-  end
 end

@@ -15,4 +15,8 @@ class ValidatedEntity
     validate
     @errors.empty?
   end
+
+  def fault
+    @fault ||= Fault.new
+  end
 end
