@@ -1,0 +1,52 @@
+# frozen_string_literal: true
+
+class ConsoleMemorization
+  COMMANDS = {
+    start: 'start',
+    rules: 'rules',
+    stats: 'stats',
+    exit: 'exit'
+  }.freeze
+
+  YES_KEYWORD = 'yes'
+  NO_KEYWORD = 'no'
+
+  def validate_entity(klass)
+    loop do
+      entity = klass.new(user_input)
+      return entity if entity.valid?
+
+      return output.show(entity.errors)
+    end
+  end
+
+  def user_input
+    input_value = input.input
+    check_hint(input_value) ? exit_from_console : input_value
+  end
+
+  def exit_from_console
+    output.exit
+    exit
+  end
+
+  def check_hint(input_value)
+    input_value == COMMANDS[:exit]
+  end
+
+  def statistic
+    @statistic ||= Statistic.new
+  end
+
+  def output
+    @output ||= Output.new
+  end
+
+  def input
+    @input ||= Input.new
+  end
+
+  def fault
+    @fault ||= Fault.new
+  end
+end

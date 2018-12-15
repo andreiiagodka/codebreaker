@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 
-class Console
-  COMMANDS = {
-    start: 'start',
-    rules: 'rules',
-    stats: 'stats',
-    exit: 'exit'
-  }.freeze
-
-  YES_KEYWORD = 'yes'
-  NO_KEYWORD = 'no'
-
+class Console < ConsoleMemorization
   def start
     output.introduction
     options
@@ -108,40 +98,5 @@ class Console
       else output.show(fault.unexpected_command)
       end
     end
-  end
-
-  def validate_entity(klass)
-    loop do
-      entity = klass.new(user_input)
-      return entity if entity.valid?
-
-      return output.show(entity.errors)
-    end
-  end
-
-  def user_input
-    input_value = input.input
-    input_value == COMMANDS[:exit] ? exit_from_console : input_value
-  end
-
-  def exit_from_console
-    output.exit
-    exit
-  end
-
-  def statistic
-    @statistic ||= Statistic.new
-  end
-
-  def output
-    @output ||= Output.new
-  end
-
-  def input
-    @input ||= Input.new
-  end
-
-  def fault
-    @fault ||= Fault.new
   end
 end
