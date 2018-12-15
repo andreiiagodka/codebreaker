@@ -22,7 +22,7 @@ class ConsoleMemorization
 
   def user_input
     input_value = input.input
-    check_hint(input_value) ? exit_from_console : input_value
+    exit?(input_value) ? exit_from_console : input_value
   end
 
   def exit_from_console
@@ -30,7 +30,7 @@ class ConsoleMemorization
     exit
   end
 
-  def check_hint(input_value)
+  def exit?(input_value)
     input_value == COMMANDS[:exit]
   end
 
