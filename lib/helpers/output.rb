@@ -43,7 +43,7 @@ class Output
   end
 
   def statistics(game)
-    puts "Used attempts: #{attempts(game)}. Used hints: #{hints(game)}."
+    puts "#{@output[:used_attempts]}: #{attempts(game)}. #{@output[:used_hints]}: #{hints(game)}."
     print @output[:input_secret_code] + ': '
   end
 
