@@ -12,7 +12,7 @@ class Player < ValidatedEntity
   end
 
   def validate
-    @errors << fault.player_name_length unless check_name_length
+    @errors << fault.player_name_length(NAME_MIN_LENGTH, NAME_MAX_LENGTH) unless check_name_length
   end
 
   private

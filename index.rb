@@ -2,4 +2,4 @@
 
 require_relative 'autoload.rb'
 
-Console.new.start
+Console.new.menu

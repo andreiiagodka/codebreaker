@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Console < ConsoleMemorization
-  def start
+  def menu
     output.introduction
     options
   end
@@ -9,50 +9,57 @@ class Console < ConsoleMemorization
   def options
     loop do
       output.options
-      option_cases
+      select_option
     end
   end
 
-  def option_cases
+  def select_option
     case user_input
-    when COMMANDS[:start] then registration
+    when COMMANDS[:start] then start
     when COMMANDS[:rules] then output.rules
     when COMMANDS[:stats] then output.show(statistic.rating_table)
     else output.show(fault.unexpected_option)
     end
   end
 
+  def start
+    registration
+    select_difficulty
+    game
+  end
+
   def registration
     loop do
       output.registration_header
-      @player = validate_entity(Player)
-      return select_difficulty if @player.is_a? Player
+      @player = create_entity(Player)
+      return if @player.is_a? Player
     end
   end
 
   def select_difficulty
     loop do
       output.difficulty_header
-      @difficulty = validate_entity(Difficulty)
-      return game if @difficulty.is_a? Difficulty
+      output.show(Difficulty.list)
+      @difficulty = create_entity(Difficulty)
+      return if @difficulty.is_a? Difficulty
     end
   end
 
   def game
-    @game = Game.new(@difficulty.level)
     output.game_start_header
+    @game = Game.new(@difficulty.level)
     guess
   end
 
   def guess
     loop do
       output.statistics(@game)
-      @guess = validate_entity(Guess)
-      return guess_continue if @guess.is_a? Guess
+      @guess = create_entity(Guess)
+      return continue_guess if @guess.is_a? Guess
     end
   end
 
-  def guess_continue
+  def continue_guess
     @guess.hint? ? show_hint : guess_result
     guess
   end

@@ -32,7 +32,6 @@ class Output
 
   def difficulty_header
     show_in_console(:difficulty_header)
-    print @output[:difficulties] + ': '
   end
 
   def win

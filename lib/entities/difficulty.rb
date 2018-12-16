@@ -33,6 +33,10 @@ class Difficulty < ValidatedEntity
     @errors << fault.unexpected_difficulty unless check_difficulty
   end
 
+  def self.list
+    DIFFICULTIES.keys.map(&:to_s).map(&:capitalize)
+  end
+
   private
 
   def check_difficulty

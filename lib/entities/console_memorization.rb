@@ -11,7 +11,7 @@ class ConsoleMemorization
   YES_KEYWORD = 'yes'
   NO_KEYWORD = 'no'
 
-  def validate_entity(klass)
+  def create_entity(klass)
     loop do
       entity = klass.new(user_input)
       return entity if entity.valid?

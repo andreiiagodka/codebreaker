@@ -20,8 +20,8 @@ class Guess < ValidatedEntity
     return if hint?
 
     @errors << fault.secret_code_format unless check_integer
-    @errors << fault.secret_code_length unless check_length
-    @errors << fault.secret_code_digits_range unless check_digits_range
+    @errors << fault.secret_code_length(SECRET_CODE_LENGTH) unless check_length
+    @errors << fault.secret_code_digits_range(ELEMENT_MIN_VALUE, ELEMENT_MAX_VALUE) unless check_digits_range
   end
 
   def mark_guess(secret_code)

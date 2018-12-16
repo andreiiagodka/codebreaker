@@ -21,20 +21,20 @@ class Fault
     get(:attempts_limit)
   end
 
-  def player_name_length
-    get(:player_name_length)
+  def player_name_length(min, max)
+    get(:player_name_length) + " min - #{min}, max - #{max}"
   end
 
   def secret_code_format
     get(:secret_code_format)
   end
 
-  def secret_code_length
-    get(:secret_code_length)
+  def secret_code_length(code_length)
+    "#{code_length} " + get(:secret_code_length)
   end
 
-  def secret_code_digits_range
-    get(:secret_code_digits_range)
+  def secret_code_digits_range(min_value, max_value)
+    get(:secret_code_digits_range) + " #{min_value}-#{max_value}"
   end
 
   def hints_limit
