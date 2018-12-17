@@ -21,7 +21,7 @@ class ConsoleMemorization
   end
 
   def user_input
-    input_value = input.input
+    input_value = input.input.downcase
     exit?(input_value) ? exit_from_console : input_value
   end
 

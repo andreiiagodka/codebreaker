@@ -2,44 +2,51 @@
 
 RSpec.describe Console do
   subject(:console) { described_class.new }
-  let(:invalid) { 'invalid command' }
+  let(:output) { Output.new }
+  let(:statistic) { Statistic.new }
 
-  describe '#start' do
-    it do
+  describe '#menu' do
+    it 'shows indroduction message and menu' do
+      expect(output).to receive(:introduction)
+      output.introduction
       expect(console).to receive(:options)
-      console.start
+      console.options
     end
   end
 
-  describe '#option_cases' do
-    it 'when start command' do
-      allow(console).to receive(:input).and_return(START_COMMAND)
-      expect(console).to receive(:gameplay)
-      console.gameplay
+  describe '#options' do
+    it 'shows options and require to select' do
+      expect(output).to receive(:options)
+      output.options
+      allow(console).to receive(:select_option)
+      console.select_option
+    end
+  end
+
+  describe '#select_option' do
+    context 'when start is chosen' do
+      it do
+        allow(console).to receive(:user_input).and_return(Console::COMMANDS[:start])
+        expect(console).to receive(:start)
+        console.start
+      end
     end
 
-    it 'when rules command' do
-      allow(console).to receive(:input).and_return(RULES_COMMAND)
-      expect(console).to receive(:output)
-      console.output
+    context 'when rules is chosen' do
+      it do
+        allow(console).to receive(:user_input).and_return(Console::COMMANDS[:rules])
+        expect(output).to receive(:rules)
+        output.rules
+      end
     end
 
-    it 'when stats command' do
-      allow(console).to receive(:input).and_return(STATS_COMMAND)
-      expect(console).to receive(:statistic)
-      console.statistic
-    end
-
-    it 'when exit command' do
-      allow(console).to receive(:input).and_return(EXIT_COMMAND)
-      expect(console).to receive(:exit_from_console)
-      console.exit_from_console
-    end
-
-    it 'when invalid command' do
-      allow(console).to receive(:input).and_return(invalid)
-      expect(console).to receive(:fault)
-      console.fault
+    context 'when stats is chosen' do
+      it do
+        allow(console).to receive(:user_input).and_return(Console::COMMANDS[:stats])
+        expect(statistic).to receive(:rating_table)
+        expect(output).to receive(:show)
+        output.show(statistic.rating_table)
+      end
     end
   end
 end
