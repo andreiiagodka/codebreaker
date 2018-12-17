@@ -1,19 +1,43 @@
 # frozen_string_literal: true
 
 RSpec.describe Player do
-  let(:name) { 'Andrei' }
-  let(:subject) { described_class.new(name) }
-  let(:invalid_name) { {short: 'An', long: 'Abcdefghijklmnopqrst'} }
+  subject(:player) { described_class.new(valid_name) }
+  let(:fault) { Fault.new }
+
+  let(:valid_name) { 'a' * Player::NAME_MIN_LENGTH }
+  let(:empty_string) { '' }
 
   describe '.new' do
-    it { expect(subject.name).to eq(name) }
+    it { expect(player.name).to eq(valid_name) }
+    it { expect(player.instance_variable_get(:@errors)).to eq([]) }
   end
 
-  describe '#validate' do
-    it 'check invalid name' do
-      subject.validate(invalid_name[:short])
-      subject.validate(invalid_name[:long])
-      expect(subject.errors).not_to be_empty
+  describe 'valid' do
+    before { player.validate }
+
+    context 'when #validate true' do
+      it { expect(player.errors.empty?).to eq(true) }
+    end
+
+    context 'when #valid? true' do
+      it { expect(player.valid?).to eq(true) }
+    end
+  end
+
+  describe 'invalid' do
+    before do
+      player.instance_variable_set(:@name, empty_string)
+      player.validate
+    end
+
+    context 'when #validate false' do
+      it { expect(player.errors).to eq(
+        [fault.player_name_length(Player::NAME_MIN_LENGTH, Player::NAME_MAX_LENGTH)]
+      )}
+    end
+
+    context 'when #valid? false' do
+      it { expect(player.valid?).to eq(false) }
     end
   end
 end
