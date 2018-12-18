@@ -12,7 +12,7 @@ class Guess < ValidatedEntity
   MINUS = '-'
 
   def initialize(guess_code)
-    super()
+    super() 
     @guess_code = guess_code
   end
 
