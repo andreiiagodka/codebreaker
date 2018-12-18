@@ -15,14 +15,14 @@ class Console < ConsoleMemorization
 
   def select_option
     case user_input
-    when COMMANDS[:start] then start
+    when COMMANDS[:start] then navigation
     when COMMANDS[:rules] then output.rules
     when COMMANDS[:stats] then output.show(statistic.rating_table)
     else output.show(fault.unexpected_option)
     end
   end
 
-  def start
+  def navigation
     registration
     select_difficulty
     game

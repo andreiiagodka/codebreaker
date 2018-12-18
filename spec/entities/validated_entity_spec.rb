@@ -3,8 +3,6 @@
 RSpec.describe ValidatedEntity do
   subject(:validated_entity) { described_class.new }
 
-  let(:some_error) { 'Invalid input' }
-
   describe '.new' do
     it { expect(validated_entity.instance_variable_get(:@errors)).to eq([]) }
   end
