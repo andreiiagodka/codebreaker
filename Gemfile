@@ -12,10 +12,7 @@ gem 'terminal-table'
 group :development do
   gem 'fasterer'
   gem 'pry'
+  gem 'rspec'
   gem 'rubocop', require: false
-end
-
-group :test do
-  gem "rspec", "~> 3.7"
   gem 'simplecov', require: false, group: :test
 end
