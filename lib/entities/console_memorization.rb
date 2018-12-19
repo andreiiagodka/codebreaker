@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class ConsoleMemorization
-  COMMANDS = {
-    start: 'start',
-    rules: 'rules',
-    stats: 'stats',
-    exit: 'exit'
-  }.freeze
-
   YES_KEYWORD = 'yes'
   NO_KEYWORD = 'no'
 

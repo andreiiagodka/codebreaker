@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class Console < ConsoleMemorization
+  COMMANDS = {
+    start: 'start',
+    rules: 'rules',
+    stats: 'stats',
+    exit: 'exit'
+  }.freeze
+
   def menu
     output.introduction
     options
@@ -8,7 +15,7 @@ class Console < ConsoleMemorization
 
   def options
     loop do
-      output.options
+      output.show(commands_list)
       select_option
     end
   end
@@ -105,5 +112,11 @@ class Console < ConsoleMemorization
       else output.show(fault.unexpected_command)
       end
     end
+  end
+
+  private
+
+  def commands_list
+    COMMANDS.values.map(&:capitalize)
   end
 end

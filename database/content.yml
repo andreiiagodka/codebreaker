@@ -1,7 +1,6 @@
 en:
   output:
     introduction: Welcome to Codebreaker!
-    options: [Start, Rules, Stats, Exit]
     rules: Codebreaker rules
     exit: Goodbye!
     registration_header: Codebreaker Registration

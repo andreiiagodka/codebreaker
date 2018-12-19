@@ -13,10 +13,6 @@ class Output
     show_in_console(:introduction)
   end
 
-  def options
-    show_in_console(:options)
-  end
-
   def rules
     show_in_console(:rules)
   end
