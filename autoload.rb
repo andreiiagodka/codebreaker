@@ -9,7 +9,6 @@ require_relative 'i18n_config'
 
 require_all './lib/helpers'
 
-require_relative './lib/entities/console_memorization'
 require_relative './lib/entities/console'
 require_relative './lib/entities/validated_entity'
 require_relative './lib/entities/player'
