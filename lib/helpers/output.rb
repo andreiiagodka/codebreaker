@@ -17,17 +17,17 @@ class Output
     show_in_console(:rules)
   end
 
-  def registration_header
-    show_in_console(:registration_header)
+  def registration_heading
+    show_in_console(:registration_heading)
     print @output[:player_name_registration] + ': '
   end
 
-  def game_start_header
-    show_in_console(:game_start_header)
+  def game_start_heading
+    show_in_console(:game_start_heading)
   end
 
-  def difficulty_header
-    show_in_console(:difficulty_header)
+  def difficulty_heading
+    show_in_console(:difficulty_heading)
   end
 
   def win

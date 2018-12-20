@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'pry'
 class Console
   COMMANDS = {
     start: 'start',
@@ -29,37 +29,19 @@ class Console
   end
 
   def navigation
-    registration
-    select_difficulty
+    @player = create_entity(Player)
+    @difficulty = create_entity(Difficulty)
     game
   end
 
-  def registration
-    loop do
-      output.registration_header
-      @player = create_entity(Player)
-      return if @player.is_a? Player
-    end
-  end
-
-  def select_difficulty
-    loop do
-      output.difficulty_header
-      output.show(Difficulty.list)
-      @difficulty = create_entity(Difficulty)
-      return if @difficulty.is_a? Difficulty
-    end
-  end
-
   def game
-    output.game_start_header
+    output.game_start_heading
     @game = Game.new(@difficulty.level)
     guess
   end
 
   def guess
     loop do
-      output.statistics(@game)
       @guess = create_entity(Guess)
       return continue_guess if @guess.is_a? Guess
     end
@@ -121,10 +103,23 @@ class Console
 
   def create_entity(klass)
     loop do
+      class_heading(klass)
       entity = klass.new(user_input)
       return entity if entity.valid?
 
-      return output.show(entity.errors)
+      output.show(entity.errors)
+    end
+  end
+
+  def class_heading(klass)
+    case klass.to_s.downcase.to_sym
+    when :player
+      output.registration_heading
+    when :difficulty
+      output.difficulty_heading
+      output.show(Difficulty.list)
+    when :guess
+      output.statistics(@game)
     end
   end
 

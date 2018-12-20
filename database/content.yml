@@ -3,9 +3,9 @@ en:
     introduction: Welcome to Codebreaker!
     rules: Codebreaker rules
     exit: Goodbye!
-    registration_header: Codebreaker Registration
-    difficulty_header: Choose difficulty
-    game_start_header: The games has started! Try to guess secret code.
+    registration_heading: Codebreaker Registration
+    difficulty_heading: Choose difficulty
+    game_start_heading: The games has started! Try to guess secret code.
     input_secret_code: Input secret code
     player_name_registration: Input your name
     used_attempts: Used attempts
