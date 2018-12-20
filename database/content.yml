@@ -13,7 +13,6 @@ en:
     win: Congratulations! You have guessed it!
 
   input:
-    input_secret_code: Input secret code
     save_result: Would you like to save result of the game? [yes/no]
     start_new_game: Would you like to start a new game? [yes/no]
 

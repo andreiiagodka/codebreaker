@@ -31,25 +31,20 @@ class Console
   def navigation
     @player = create_entity(Player)
     @difficulty = create_entity(Difficulty)
-    game
+    game_process
   end
 
-  def game
+  def game_process
     output.game_start_heading
     @game = Game.new(@difficulty.level)
-    guess
+    make_guess
   end
 
-  def guess
+  def make_guess
     loop do
       @guess = create_entity(Guess)
-      return continue_guess if @guess.is_a? Guess
+      @guess.hint? ? show_hint : guess_result
     end
-  end
-
-  def continue_guess
-    @guess.hint? ? show_hint : guess_result
-    guess
   end
 
   def show_hint
@@ -58,10 +53,10 @@ class Console
 
   def guess_result
     @game.increment_used_attempts
-    marked_guess = @guess.mark_guess(@game.secret_code)
-    output.show(marked_guess)
-    return win if @game.win?(marked_guess)
+    return win if @game.win?(@guess.guess_code)
     return loss if @game.loss?
+    marked_guess = @game.mark_guess(@guess.guess_code)
+    output.show(marked_guess)
   end
 
   def win

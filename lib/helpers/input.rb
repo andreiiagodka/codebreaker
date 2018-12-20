@@ -17,10 +17,6 @@ class Input
     get_input_from_console(:difficulties)
   end
 
-  def secret_code
-    get_input_from_console(:input_secret_code)
-  end
-
   def save_result
     get_input_from_console(:save_result)
   end
