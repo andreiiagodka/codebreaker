@@ -20,7 +20,7 @@ en:
     unexpected_option: You have passed unexpected option. Please choose one from listed options.
     unexpected_command: You have passed unexpected command. Please choose one from listed options.
     unexpected_difficulty: You have passed unexpected difficulty. Please choose one from listed difficulties.
-    player_name_length: Player name size
+    player_name_length: Player name length min - %{min_length}, max - %{max_length}
     secret_code_length: elements are required!
     secret_code_format: Only digits are required!
     secret_code_digits_range: Each digit has to be in range

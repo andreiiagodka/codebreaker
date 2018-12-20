@@ -25,12 +25,11 @@ class Difficulty < ValidatedEntity
 
   def initialize(difficulty)
     super()
-    @difficulty = difficulty.to_sym
-    @level = DIFFICULTIES[@difficulty]
+    @level = DIFFICULTIES[difficulty.to_sym]
   end
 
   def validate
-    @errors << fault.unexpected_difficulty unless check_difficulty
+    @errors << fault.unexpected_difficulty if check_difficulty
   end
 
   def self.list
@@ -40,6 +39,6 @@ class Difficulty < ValidatedEntity
   private
 
   def check_difficulty
-    DIFFICULTIES.key?(@difficulty)
+    @level.nil?
   end
 end

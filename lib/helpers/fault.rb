@@ -22,7 +22,7 @@ class Fault
   end
 
   def player_name_length(min, max)
-    get(:player_name_length) + " min - #{min}, max - #{max}"
+    get(:player_name_length, min_length: min, max_length: max)
   end
 
   def secret_code_format
@@ -43,7 +43,7 @@ class Fault
 
   private
 
-  def get(argument, fault = @fault)
-    fault[argument]
+  def get(argument)
+    @fault[argument]
   end
 end

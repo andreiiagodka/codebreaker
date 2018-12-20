@@ -24,7 +24,7 @@ class Game
     @shuffled_code.shift
   end
 
-  def hints_limit?
+  def hints_available?
     @used_hints >= @total_hints
   end
 

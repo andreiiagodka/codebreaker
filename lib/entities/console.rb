@@ -58,7 +58,7 @@ class Console
   end
 
   def show_hint
-    @game.hints_limit? ? output.show(fault.hints_limit) : output.show(@game.use_hint)
+    @game.hints_available? ? output.show(fault.hints_limit) : output.show(@game.use_hint)
   end
 
   def guess_result
