@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'pry'
+
 class Console
   COMMANDS = {
     start: 'start',
@@ -8,8 +8,16 @@ class Console
     exit: 'exit'
   }.freeze
 
-  YES_KEYWORD = 'yes'
-  NO_KEYWORD = 'no'
+  KEYWORDS = {
+    yes: 'yes',
+    no: 'no'
+  }.freeze
+
+  ENTITIES = {
+    player: 'Player',
+    difficulty: 'Difficulty',
+    guess: 'Guess'
+  }.freeze
 
   def menu
     output.introduction
@@ -55,6 +63,7 @@ class Console
     @game.increment_used_attempts
     return win if @game.win?(@guess.guess_code)
     return loss if @game.loss?
+
     marked_guess = @game.mark_guess(@guess.guess_code)
     output.show(marked_guess)
   end
@@ -73,8 +82,8 @@ class Console
   def save_result
     loop do
       case input.save_result
-      when YES_KEYWORD then return statistic.save(@player, @game)
-      when NO_KEYWORD then return
+      when KEYWORDS[:yes] then return statistic.save(@player, @game)
+      when KEYWORDS[:no] then return
       else output.show(fault.unexpected_command)
       end
     end
@@ -83,8 +92,8 @@ class Console
   def start_new_game
     loop do
       case input.start_new_game
-      when YES_KEYWORD then start
-      when NO_KEYWORD then exit_from_console
+      when KEYWORDS[:yes] then menu
+      when KEYWORDS[:no] then exit_from_console
       else output.show(fault.unexpected_command)
       end
     end
@@ -107,14 +116,10 @@ class Console
   end
 
   def class_heading(klass)
-    case klass.to_s.downcase.to_sym
-    when :player
-      output.registration_heading
-    when :difficulty
-      output.difficulty_heading
-      output.show(Difficulty.list)
-    when :guess
-      output.statistics(@game)
+    case klass.to_s
+    when ENTITIES[:player] then output.registration_heading
+    when ENTITIES[:difficulty] then output.difficulty_heading
+    when ENTITIES[:guess] then output.statistics(@game)
     end
   end
 
@@ -123,13 +128,13 @@ class Console
     exit?(input_value) ? exit_from_console : input_value
   end
 
+  def exit?(input_value)
+    input_value == COMMANDS[:exit]
+  end
+
   def exit_from_console
     output.exit
     exit
-  end
-
-  def exit?(input_value)
-    input_value == COMMANDS[:exit]
   end
 
   def statistic

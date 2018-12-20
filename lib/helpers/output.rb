@@ -28,6 +28,7 @@ class Output
 
   def difficulty_heading
     show_in_console(:difficulty_heading)
+    show(Difficulty.list)
   end
 
   def win
