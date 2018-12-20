@@ -40,21 +40,16 @@ class Output
   end
 
   def statistics(game)
-    puts "#{@output[:used_attempts]}: #{attempts(game)}. #{@output[:used_hints]}: #{hints(game)}."
+    show(
+      I18n.t('output.statistics', used_attempts: game.used_attempts, total_attempts: game.total_attempts,
+      used_hints: game.used_hints, total_hints: game.total_hints)
+    )
     print @output[:input_secret_code] + ': '
   end
 
   private
 
   def show_in_console(argument)
-    puts @output[argument]
-  end
-
-  def attempts(game)
-    "#{game.used_attempts}/#{game.total_attempts}"
-  end
-
-  def hints(game)
-    "#{game.used_hints}/#{game.total_hints}"
+    show(@output[argument])
   end
 end
