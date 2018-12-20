@@ -6,8 +6,9 @@ class Game
   SECRET_CODE_LENGTH = 4
   ELEMENT_VALUE_RANGE = (1..6).freeze
 
-  PLUS = '+'
-  MINUS = '-'
+  DELIMITER = ''
+  EXACT_MATCH = '+'
+  NUMBER_MATCH = '-'
 
   def initialize(difficulty)
     @difficulty = difficulty[:level]
@@ -29,7 +30,7 @@ class Game
   end
 
   def win?(guess_code)
-    convert_input(guess_code) == @secret_code
+    convert_to_digit_array(guess_code) == @secret_code
   end
 
   def loss?
@@ -41,13 +42,12 @@ class Game
   end
 
   def mark_guess(guess_code)
-    @secret_code = secret_code
+    @converted_input = convert_to_digit_array(guess_code)
     cloned_code = @secret_code.clone
-    input_digits = convert_input(guess_code)
     marked_guess = []
-    exact_match(input_digits, cloned_code, marked_guess)
-    number_match(input_digits, cloned_code, marked_guess)
-    convert_guess(marked_guess)
+    exact_match(cloned_code, marked_guess)
+    number_match(cloned_code, marked_guess)
+    convert_to_string(marked_guess)
   end
 
   private
@@ -60,32 +60,32 @@ class Game
     @used_hints += 1
   end
 
-  def convert_input(guess_code)
-    guess_code.split('').map(&:to_i)
+  def convert_to_digit_array(guess_code)
+    guess_code.split(DELIMITER).map(&:to_i)
   end
 
-  def exact_match(input_digits, cloned_code, marked_guess)
-    input_digits.each_with_index do |digit, index|
+  def exact_match(cloned_code, marked_guess)
+    @converted_input.each_with_index do |digit, index|
       next unless digit == @secret_code[index]
 
-      marked_guess << PLUS
+      marked_guess << EXACT_MATCH
       remove_digit(digit, cloned_code)
     end
   end
 
-  def number_match(input_digits, cloned_code, marked_guess)
+  def number_match(cloned_code, marked_guess)
     cloned_code.each do |digit|
-      next unless input_digits.include? digit
+      next unless @converted_input.include? digit
 
-      marked_guess << MINUS
+      marked_guess << NUMBER_MATCH
     end
-  end
-
-  def convert_guess(guess)
-    guess.join('')
   end
 
   def remove_digit(digit, cloned_code)
     cloned_code.delete_at(cloned_code.index(digit))
+  end
+
+  def convert_to_string(guess)
+    guess.join.to_s
   end
 end

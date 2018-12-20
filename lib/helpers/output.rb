@@ -41,8 +41,11 @@ class Output
 
   def statistics(game)
     show(
-      I18n.t('output.statistics', used_attempts: game.used_attempts, total_attempts: game.total_attempts,
-      used_hints: game.used_hints, total_hints: game.total_hints)
+      I18n.t('output.statistics',
+             used_attempts: game.used_attempts,
+             total_attempts: game.total_attempts,
+             used_hints: game.used_hints,
+             total_hints: game.total_hints)
     )
     print @output[:input_secret_code] + ': '
   end
