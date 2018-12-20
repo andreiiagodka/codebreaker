@@ -27,6 +27,8 @@ class Console
     end
   end
 
+  private
+
   def select_option
     case user_input
     when COMMANDS[:start] then navigation
@@ -98,8 +100,6 @@ class Console
       end
     end
   end
-
-  private
 
   def options_list
     COMMANDS.values.map(&:capitalize)

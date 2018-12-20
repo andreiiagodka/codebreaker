@@ -9,14 +9,6 @@ class Input
     gets.chomp.downcase
   end
 
-  def player_name
-    get_input_from_console(:player_name_registration)
-  end
-
-  def difficulty
-    get_input_from_console(:difficulties)
-  end
-
   def save_result
     get_input_from_console(:save_result)
   end
