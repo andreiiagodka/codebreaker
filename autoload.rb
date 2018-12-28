@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'pry'
 require 'require_all'
 require 'yaml'
 require 'i18n'
@@ -7,6 +8,7 @@ require 'terminal-table'
 
 require_relative 'config/i18n'
 
+require_relative 'lib/helpers/io_helper'
 require_all 'lib/helpers'
 
 require_relative 'lib/entities/console'

@@ -22,7 +22,7 @@ class Console
   def menu
     output.introduction
     loop do
-      output.show(options_list)
+      output.output(options_list)
       select_option
     end
   end
@@ -33,8 +33,8 @@ class Console
     case user_input
     when COMMANDS[:start] then navigation
     when COMMANDS[:rules] then output.rules
-    when COMMANDS[:stats] then output.show(statistic.rating_table)
-    else output.show(fault.unexpected_option)
+    when COMMANDS[:stats] then output.output(statistic.rating_table)
+    else output.output(fault.unexpected_option)
     end
   end
 
@@ -53,12 +53,12 @@ class Console
   def make_guess
     loop do
       @guess = create_entity(Guess)
-      @guess.hint? ? show_hint : guess_result
+      @guess.hint? ? output_hint : guess_result
     end
   end
 
-  def show_hint
-    @game.hints_available? ? output.show(fault.hints_limit) : output.show(@game.use_hint)
+  def output_hint
+    @game.hints_available? ? output.output(fault.hints_limit) : output.output(@game.use_hint)
   end
 
   def guess_result
@@ -67,7 +67,7 @@ class Console
     return loss if @game.loss?
 
     marked_guess = @game.mark_guess(@guess.guess_code)
-    output.show(marked_guess)
+    output.output(marked_guess)
   end
 
   def win
@@ -77,7 +77,7 @@ class Console
   end
 
   def loss
-    output.show(fault.attempts_limit)
+    output.output(fault.attempts_limit)
     start_new_game
   end
 
@@ -86,7 +86,7 @@ class Console
       case input.save_result
       when KEYWORDS[:yes] then return statistic.save(@player, @game)
       when KEYWORDS[:no] then return
-      else output.show(fault.unexpected_command)
+      else output.output(fault.unexpected_command)
       end
     end
   end
@@ -96,7 +96,7 @@ class Console
       case input.start_new_game
       when KEYWORDS[:yes] then menu
       when KEYWORDS[:no] then exit_from_console
-      else output.show(fault.unexpected_command)
+      else output.output(fault.unexpected_command)
       end
     end
   end
@@ -111,13 +111,13 @@ class Console
       entity = klass.new(user_input)
       return entity if entity.valid?
 
-      output.show(entity.errors)
+      output.output(entity.errors)
     end
   end
 
   def class_heading(klass)
     case klass.to_s
-    when ENTITIES[:player] then output.registration_heading
+    when ENTITIES[:player] then output.registration
     when ENTITIES[:difficulty] then output.difficulty_heading
     when ENTITIES[:guess] then output.statistics(@game)
     end

@@ -1,5 +1,5 @@
 en:
-  output:
+  message:
     introduction: Welcome to Codebreaker!
     rules: Codebreaker rules
     exit: Goodbye!
