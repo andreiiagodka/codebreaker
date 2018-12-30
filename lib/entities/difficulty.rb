@@ -29,7 +29,7 @@ class Difficulty < ValidatedEntity
   end
 
   def validate
-    @errors << fault.unexpected_difficulty if check_difficulty
+    @errors << failing.unexpected_difficulty if check_difficulty
   end
 
   def self.list

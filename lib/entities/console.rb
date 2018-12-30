@@ -34,7 +34,7 @@ class Console
     when COMMANDS[:start] then navigation
     when COMMANDS[:rules] then output.rules
     when COMMANDS[:stats] then output.output(statistic.rating_table)
-    else output.output(fault.unexpected_option)
+    else output.output(failing.unexpected_option)
     end
   end
 
@@ -58,7 +58,7 @@ class Console
   end
 
   def output_hint
-    @game.hints_available? ? output.output(fault.hints_limit) : output.output(@game.use_hint)
+    @game.hints_available? ? output.output(failing.hints_limit) : output.output(@game.use_hint)
   end
 
   def guess_result
@@ -77,7 +77,7 @@ class Console
   end
 
   def loss
-    output.output(fault.attempts_limit)
+    output.output(failing.attempts_limit)
     start_new_game
   end
 
@@ -87,7 +87,7 @@ class Console
       case user_input
       when KEYWORDS[:yes] then return statistic.save(@player, @game)
       when KEYWORDS[:no] then return
-      else output.output(fault.unexpected_command)
+      else output.output(failing.unexpected_command)
       end
     end
   end
@@ -98,7 +98,7 @@ class Console
       case user_input
       when KEYWORDS[:yes] then menu
       when KEYWORDS[:no] then exit_from_console
-      else output.output(fault.unexpected_command)
+      else output.output(failing.unexpected_command)
       end
     end
   end
@@ -147,7 +147,7 @@ class Console
     @output ||= Output.new
   end
 
-  def fault
-    @fault ||= Fault.new
+  def failing
+    @failing ||= Failing.new
   end
 end

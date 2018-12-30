@@ -14,7 +14,7 @@ class ValidatedEntity
     @errors.empty?
   end
 
-  def fault
-    @fault ||= Fault.new
+  def failing
+    @failing ||= Failing.new
   end
 end

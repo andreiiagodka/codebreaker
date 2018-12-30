@@ -3,8 +3,7 @@
 class Guess < ValidatedEntity
   attr_reader :guess_code, :errors
 
-  ELEMENT_MIN_VALUE = 1
-  ELEMENT_MAX_VALUE = 6
+  ELEMENT_VALUE_RANGE = (1..6)
 
   HINT = 'hint'
 
@@ -16,9 +15,8 @@ class Guess < ValidatedEntity
   def validate
     return if hint?
 
-    @errors << fault.secret_code_format unless check_integer
-    @errors << fault.secret_code_length(Game::SECRET_CODE_LENGTH) unless check_length
-    @errors << fault.secret_code_digits_range(ELEMENT_MIN_VALUE, ELEMENT_MAX_VALUE) unless check_digits_range
+    @errors << failing.secret_code_length unless check_length
+    @errors << failing.secret_code_digits_range unless check_digits_range
   end
 
   def hint?
@@ -27,15 +25,11 @@ class Guess < ValidatedEntity
 
   private
 
-  def check_integer
-    @guess_code.to_i.to_s == @guess_code
-  end
-
   def check_length
     @guess_code.length == Game::SECRET_CODE_LENGTH
   end
 
   def check_digits_range
-    @guess_code.each_char { |digit| break unless digit.to_i.between?(ELEMENT_MIN_VALUE, ELEMENT_MAX_VALUE) }
+    @guess_code.each_char { |digit| break unless ELEMENT_VALUE_RANGE.include?(digit.to_i) }
   end
 end

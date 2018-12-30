@@ -3,8 +3,7 @@
 class Player < ValidatedEntity
   attr_reader :name, :errors
 
-  NAME_MIN_LENGTH = 3
-  NAME_MAX_LENGTH = 20
+  NAME_LENGTH_RANGE = (3..20)
 
   def initialize(name)
     super()
@@ -12,12 +11,12 @@ class Player < ValidatedEntity
   end
 
   def validate
-    @errors << fault.player_name_length(NAME_MIN_LENGTH, NAME_MAX_LENGTH) unless check_name_length
+    @errors << failing.player_name_length unless check_name_length
   end
 
   private
 
   def check_name_length
-    @name.length.between?(NAME_MIN_LENGTH, NAME_MAX_LENGTH)
+    NAME_LENGTH_RANGE.include?(@name.length)
   end
 end

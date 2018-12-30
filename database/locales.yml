@@ -15,13 +15,12 @@ en:
     save_result: Would you like to save result of the game? [yes/no]
     start_new_game: Would you like to start a new game? [yes/no]
 
-  fault:
+  error:
     unexpected_option: You have passed unexpected option. Please choose one from listed options.
     unexpected_command: You have passed unexpected command. Please choose one from listed options.
     unexpected_difficulty: You have passed unexpected difficulty. Please choose one from listed difficulties.
     player_name_length: Player name length min - %{min_length}, max - %{max_length}
     secret_code_length: Required %{code_length} elements!
-    secret_code_format: Only digits are required!
     secret_code_digits_range: Each digit has to be in range %{min_value}-%{max_value}!
     hints_limit: You are out of hints!
     attempts_limit: You are out of attempts!
