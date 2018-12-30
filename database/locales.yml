@@ -12,8 +12,6 @@ en:
     used_attempts: Used attempts
     used_hints: Used hints
     win: Congratulations! You have guessed it!
-
-  input:
     save_result: Would you like to save result of the game? [yes/no]
     start_new_game: Would you like to start a new game? [yes/no]
 

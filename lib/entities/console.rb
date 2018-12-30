@@ -82,8 +82,9 @@ class Console
   end
 
   def save_result
+    output.save_result
     loop do
-      case input.save_result
+      case user_input
       when KEYWORDS[:yes] then return statistic.save(@player, @game)
       when KEYWORDS[:no] then return
       else output.output(fault.unexpected_command)
@@ -92,8 +93,9 @@ class Console
   end
 
   def start_new_game
+    output.start_new_game
     loop do
-      case input.start_new_game
+      case user_input
       when KEYWORDS[:yes] then menu
       when KEYWORDS[:no] then exit_from_console
       else output.output(fault.unexpected_command)
@@ -124,7 +126,7 @@ class Console
   end
 
   def user_input
-    input_value = input.input.downcase
+    input_value = gets.chomp.downcase
     exit?(input_value) ? exit_from_console : input_value
   end
 
@@ -143,10 +145,6 @@ class Console
 
   def output
     @output ||= Output.new
-  end
-
-  def input
-    @input ||= Input.new
   end
 
   def fault

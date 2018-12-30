@@ -42,6 +42,14 @@ class Output < IOHelper
     message(:input_secret_code)
   end
 
+  def save_result
+    message(:save_result)
+  end
+
+  def start_new_game
+    message(:start_new_game)
+  end
+
   private
 
   def message(message, *parameters)
