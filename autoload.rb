@@ -7,7 +7,7 @@ require 'terminal-table'
 
 require_relative 'config/i18n'
 
-require_relative 'lib/helpers/io_helper'
+require_relative 'lib/helpers/output_helper'
 require_relative 'lib/helpers/output'
 require_relative 'lib/helpers/failing'
 

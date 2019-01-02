@@ -22,7 +22,7 @@ class Console
   def menu
     output.introduction
     loop do
-      output.output(options_list)
+      output.display(options_list)
       select_option
     end
   end
@@ -31,10 +31,10 @@ class Console
 
   def select_option
     case user_input
-    when COMMANDS[:start] then navigation
+    when COMMANDS[:start] then return navigation
     when COMMANDS[:rules] then output.rules
-    when COMMANDS[:stats] then output.output(statistic.rating_table)
-    else output.output(failing.unexpected_option)
+    when COMMANDS[:stats] then output.display(statistic.rating_table)
+    else output.display(failing.unexpected_option)
     end
   end
 
@@ -58,7 +58,7 @@ class Console
   end
 
   def output_hint
-    @game.hints_available? ? output.output(failing.hints_limit) : output.output(@game.use_hint)
+    @game.hints_available? ? output.display(failing.hints_limit) : output.display(@game.use_hint)
   end
 
   def guess_result
@@ -67,7 +67,7 @@ class Console
     return loss if @game.loss?
 
     marked_guess = @game.mark_guess(@guess.guess_code)
-    output.output(marked_guess)
+    output.display(marked_guess)
   end
 
   def win
@@ -77,7 +77,7 @@ class Console
   end
 
   def loss
-    output.output(failing.attempts_limit)
+    output.display(failing.attempts_limit)
     start_new_game
   end
 
@@ -87,7 +87,7 @@ class Console
       case user_input
       when KEYWORDS[:yes] then return statistic.save(@player, @game)
       when KEYWORDS[:no] then return
-      else output.output(failing.unexpected_command)
+      else output.display(failing.unexpected_command)
       end
     end
   end
@@ -98,7 +98,7 @@ class Console
       case user_input
       when KEYWORDS[:yes] then menu
       when KEYWORDS[:no] then exit_from_console
-      else output.output(failing.unexpected_command)
+      else output.display(failing.unexpected_command)
       end
     end
   end
@@ -113,7 +113,7 @@ class Console
       entity = klass.new(user_input)
       return entity if entity.valid?
 
-      output.output(entity.errors)
+      output.display(entity.errors)
     end
   end
 

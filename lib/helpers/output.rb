@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Output < IOHelper
+class Output < OutputHelper
   MESSAGE = 'message'
 
   def introduction
@@ -22,7 +22,7 @@ class Output < IOHelper
 
   def difficulty_heading
     message(:difficulty_heading)
-    output(Difficulty.list)
+    display(Difficulty.list)
   end
 
   def win
@@ -53,6 +53,6 @@ class Output < IOHelper
   private
 
   def message(message, *parameters)
-    output(get(MESSAGE, message, *parameters))
+    display(get(MESSAGE, message, *parameters))
   end
 end

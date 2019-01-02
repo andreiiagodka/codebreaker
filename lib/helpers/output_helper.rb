@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class IOHelper
+class OutputHelper
   def get(section, message, *parameters)
     I18n.t(translation_access(section, message), *parameters)
   end
 
-  def output(argument)
+  def display(argument)
     puts argument
   end
 

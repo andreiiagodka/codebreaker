@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Failing < IOHelper
+class Failing < OutputHelper
   ERROR = 'error'
 
   def unexpected_option

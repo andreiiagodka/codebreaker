@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'pry'
 class Game
   attr_reader :difficulty, :total_attempts, :used_attempts, :total_hints, :used_hints, :secret_code
 
@@ -30,7 +30,7 @@ class Game
   end
 
   def win?(guess_code)
-    convert_to_digit_array(guess_code) == @secret_code
+    guess_code == convert_to_string(@secret_code)
   end
 
   def loss?
@@ -43,11 +43,8 @@ class Game
 
   def mark_guess(guess_code)
     @converted_input = convert_to_digit_array(guess_code)
-    cloned_code = @secret_code.clone
-    marked_guess = []
-    exact_match(cloned_code, marked_guess)
-    number_match(cloned_code, marked_guess)
-    convert_to_string(marked_guess)
+    @cloned_code = @secret_code.clone
+    convert_to_string(exact_match.compact + number_match.compact)
   end
 
   private
@@ -60,32 +57,34 @@ class Game
     @used_hints += 1
   end
 
+  def convert_to_string(argument)
+    argument.join
+  end
+
   def convert_to_digit_array(guess_code)
     guess_code.split(DELIMITER).map(&:to_i)
   end
 
-  def exact_match(cloned_code, marked_guess)
-    @converted_input.each_with_index do |digit, index|
-      next unless digit == @secret_code[index]
+  def exact_match
+    @converted_input.map.with_index do |digit, index|
+      next unless @cloned_code[index] == digit
 
-      marked_guess << EXACT_MATCH
-      remove_digit(digit, cloned_code)
+      @converted_input[index] = nil
+      @cloned_code[index] = nil
+      EXACT_MATCH
     end
   end
 
-  def number_match(cloned_code, marked_guess)
-    cloned_code.each do |digit|
-      next unless @converted_input.include? digit
+  def number_match
+    @converted_input.compact.map.with_index do |digit, index|
+      next unless @cloned_code.include?(digit)
 
-      marked_guess << NUMBER_MATCH
+      @cloned_code.delete_at(index)
+      NUMBER_MATCH
     end
   end
 
-  def remove_digit(digit, cloned_code)
-    cloned_code.delete_at(cloned_code.index(digit))
-  end
-
-  def convert_to_string(guess)
-    guess.join.to_s
+  def convert_marked_guess
+    convert_to_string(@cloned_code.grep(String).sort)
   end
 end
