@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'pry'
+
 class Game
   attr_reader :difficulty, :total_attempts, :used_attempts, :total_hints, :used_hints, :secret_code
 

@@ -3,7 +3,7 @@
 class Player < ValidatedEntity
   attr_reader :name, :errors
 
-  NAME_LENGTH_RANGE = (3..20)
+  NAME_LENGTH_RANGE = (3..20).freeze
 
   def initialize(name)
     super()

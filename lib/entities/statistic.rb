@@ -27,7 +27,7 @@ class Statistic
   private
 
   def table_rows
-    load.each_with_index.map { |record, index| rows(record, index) }
+    File.exist?(STATISTIC_YML) ? load.each_with_index.map { |record, index| rows(record, index) } : []
   end
 
   def rows(record, index)

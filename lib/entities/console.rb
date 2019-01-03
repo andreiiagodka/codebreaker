@@ -31,7 +31,7 @@ class Console
 
   def select_option
     case user_input
-    when COMMANDS[:start] then return navigation
+    when COMMANDS[:start] then navigation
     when COMMANDS[:rules] then output.rules
     when COMMANDS[:stats] then output.display(statistic.rating_table)
     else output.display(failing.unexpected_option)

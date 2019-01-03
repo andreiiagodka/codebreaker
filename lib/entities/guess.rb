@@ -3,7 +3,7 @@
 class Guess < ValidatedEntity
   attr_reader :guess_code, :errors
 
-  ELEMENT_VALUE_RANGE = (1..6)
+  ELEMENT_VALUE_RANGE = (1..6).freeze
 
   HINT = 'hint'
 
