@@ -11,6 +11,8 @@ require_relative 'lib/helpers/output_helper'
 require_relative 'lib/helpers/output'
 require_relative 'lib/helpers/failing'
 
+require_relative 'lib/modules/console_user_interaction'
+
 require_relative 'lib/entities/console'
 require_relative 'lib/entities/validated_entity'
 require_relative 'lib/entities/player'

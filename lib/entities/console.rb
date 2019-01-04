@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Console
+  include ConsoleUserInteraction
+
   COMMANDS = {
     start: 'start',
     rules: 'rules',
@@ -11,12 +13,6 @@ class Console
   KEYWORDS = {
     yes: 'yes',
     no: 'no'
-  }.freeze
-
-  ENTITIES = {
-    player: 'Player',
-    difficulty: 'Difficulty',
-    guess: 'Guess'
   }.freeze
 
   def menu
@@ -34,7 +30,7 @@ class Console
     when COMMANDS[:start] then navigation
     when COMMANDS[:rules] then output.rules
     when COMMANDS[:stats] then output.display(statistic.rating_table)
-    else output.display(failing.unexpected_option)
+    else failing.unexpected_option
     end
   end
 
@@ -87,7 +83,7 @@ class Console
       case user_input
       when KEYWORDS[:yes] then return statistic.save(@player, @game)
       when KEYWORDS[:no] then return
-      else output.display(failing.unexpected_command)
+      else failing.unexpected_command
       end
     end
   end
@@ -98,56 +94,8 @@ class Console
       case user_input
       when KEYWORDS[:yes] then menu
       when KEYWORDS[:no] then exit_from_console
-      else output.display(failing.unexpected_command)
+      else failing.unexpected_command
       end
     end
-  end
-
-  def options_list
-    COMMANDS.values.map(&:capitalize)
-  end
-
-  def create_entity(klass)
-    loop do
-      class_heading(klass)
-      entity = klass.new(user_input)
-      return entity if entity.valid?
-
-      output.display(entity.errors)
-    end
-  end
-
-  def class_heading(klass)
-    case klass.to_s
-    when ENTITIES[:player] then output.registration
-    when ENTITIES[:difficulty] then output.difficulty_heading
-    when ENTITIES[:guess] then output.statistics(@game)
-    end
-  end
-
-  def user_input
-    input_value = gets.chomp.downcase
-    exit?(input_value) ? exit_from_console : input_value
-  end
-
-  def exit?(input_value)
-    input_value == COMMANDS[:exit]
-  end
-
-  def exit_from_console
-    output.exit
-    exit
-  end
-
-  def statistic
-    @statistic ||= Statistic.new
-  end
-
-  def output
-    @output ||= Output.new
-  end
-
-  def failing
-    @failing ||= Failing.new
   end
 end

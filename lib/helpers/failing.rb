@@ -3,16 +3,8 @@
 class Failing < OutputHelper
   ERROR = 'error'
 
-  def unexpected_option
-    error(:unexpected_option)
-  end
-
   def unexpected_difficulty
     error(:unexpected_difficulty)
-  end
-
-  def unexpected_command
-    error(:unexpected_command)
   end
 
   def attempts_limit
@@ -38,6 +30,14 @@ class Failing < OutputHelper
     error(:secret_code_digits_range,
           min_value: Guess::ELEMENT_VALUE_RANGE.min,
           max_value: Guess::ELEMENT_VALUE_RANGE.max)
+  end
+
+  def unexpected_option
+    display(error(:unexpected_option))
+  end
+
+  def unexpected_command
+    display(error(:unexpected_command))
   end
 
   private
