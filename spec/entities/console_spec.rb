@@ -6,10 +6,12 @@ RSpec.describe Console do
   let(:statistic) { Statistic.new }
 
   let(:difficulty_double) { instance_double('Difficulty', level: Difficulty::DIFFICULTIES[random_difficulty]) }
+  let(:guess_double) { instance_double('Guess', guess_code: random_secret_code) }
 
   let(:list_of_options) { console.options_list.join("\n") }
   let(:invalid_command) { Console::COMMANDS.keys }
   let(:random_difficulty) { Difficulty::DIFFICULTIES.keys.sample }
+  let(:random_secret_code) { Array.new(Game::SECRET_CODE_LENGTH) { rand(Game::ELEMENT_VALUE_RANGE) } }
 
   describe '#menu' do
     before do
@@ -53,11 +55,10 @@ RSpec.describe Console do
       allow(console).to receive(:game_process)
     end
 
-    after { console.select_option }
-
     it 'calls methods which create Player and Difficulty instances' do
       expect(console).to receive(:create_entity).with(Player)
       expect(console).to receive(:create_entity).with(Difficulty)
+      console.select_option
     end
   end
 
@@ -68,33 +69,29 @@ RSpec.describe Console do
       console.instance_variable_set(:@difficulty, difficulty_double)
     end
 
-    after { console.send(:game_process) }
-
     it 'outputs game start message' do
       expect { console.send(:game_process) }.to output("#{I18n.t('message.game_start_heading')}\n").to_stdout
+      console.select_option
     end
 
     it 'creates Game instance' do
       expect(Game).to receive(:new).with(difficulty_double.level)
+      console.select_option
     end
   end
 
   describe '#make_guess' do
     before do
-      allow(console).to receive(:loop).and_yield
-      expect(console).to receive(:create_entity).with(Guess)
+      allow(console).to receive(:user_input).and_return(Console::COMMANDS[:start])
+      allow(console).to receive(:navigation)
+      allow(console).to receive(:game_process)
+      allow(console).to receive(:make_guess)
     end
 
-    after { console.send(:make_guess) }
-
-    it 'calls #output_hint' do
-      allow(console.instance_variable_get(:@guess)).to receive(:hint?).and_return(true)
-      expect(console).to receive(:output_hint)
-    end
-
-    it 'calls #guess_result' do
-      allow(console.instance_variable_get(:@guess)).to receive(:hint?)
-      expect(console).to receive(:guess_result)
+    it 'creates Guess instance' do
+      console.instance_variable_set(:@guess, guess_double)
+      expect(console.instance_variable_get(:@guess)).to receive(:hint?).and_return(true)
+      console.select_option
     end
   end
 
