@@ -25,49 +25,56 @@ RSpec.describe Console do
   describe '#select_option' do
     before { allow(console).to receive(:navigation) }
 
-    after { console.send(:navigation) }
-
     it 'when command #start' do
       allow(console).to receive(:user_input).and_return(Console::COMMANDS[:start])
       expect(console).to receive(:navigation)
+      console.select_option
     end
 
     it 'when command #rules' do
       allow(console).to receive(:user_input).and_return(Console::COMMANDS[:rules])
-      expect { console.send(:select_option) }.to output("#{I18n.t('message.rules')}\n").to_stdout
+      expect { console.select_option }.to output("#{I18n.t('message.rules')}\n").to_stdout
     end
 
     it 'when command #stats' do
       allow(console).to receive(:user_input).and_return(Console::COMMANDS[:stats])
-      expect { console.send(:select_option) }.to output("#{statistic.rating_table}\n").to_stdout
+      expect { console.select_option }.to output("#{statistic.rating_table}\n").to_stdout
     end
 
     it 'when command is invalid' do
       allow(console).to receive(:user_input).and_return(invalid_command)
-      expect { console.send(:select_option) }.to output("#{I18n.t('error.unexpected_option')}\n").to_stdout
+      expect { console.select_option }.to output("#{I18n.t('error.unexpected_option')}\n").to_stdout
     end
   end
 
   describe '#navigation' do
-    before { allow(console).to receive(:game_process) }
-
-    after { console.send(:navigation) }
-
-    it 'calls create Player and Difficulty instances methods' do
+    before do
       allow(console).to receive(:user_input).and_return(Console::COMMANDS[:start])
+      allow(console).to receive(:game_process)
+    end
+
+    after { console.select_option }
+
+    it 'calls methods which create Player and Difficulty instances' do
       expect(console).to receive(:create_entity).with(Player)
       expect(console).to receive(:create_entity).with(Difficulty)
     end
   end
 
   describe '#game_process' do
-    before { allow(console).to receive(:make_guess) }
+    before do
+      allow(console).to receive(:user_input).and_return(Console::COMMANDS[:start], difficulty_double.level[:level])
+      allow(console).to receive(:make_guess)
+      console.instance_variable_set(:@difficulty, difficulty_double)
+    end
 
     after { console.send(:game_process) }
 
-    it 'creates Game instance' do
-      console.instance_variable_set(:@difficulty, difficulty_double)
+    it 'outputs game start message' do
       expect { console.send(:game_process) }.to output("#{I18n.t('message.game_start_heading')}\n").to_stdout
+    end
+
+    it 'creates Game instance' do
       expect(Game).to receive(:new).with(difficulty_double.level)
     end
   end
@@ -86,12 +93,15 @@ RSpec.describe Console do
     end
 
     it 'calls #guess_result' do
-      allow(console.instance_variable_get(:@guess)).to receive(:hint?).and_return(false)
+      allow(console.instance_variable_get(:@guess)).to receive(:hint?)
       expect(console).to receive(:guess_result)
     end
   end
 
   describe '#output_hint' do
-    
+    it 'outputs hints limit message' do
+      allow(console.instance_variable_get(:@game)).to receive(:hints_available?).and_return(true)
+      expect { console.send(:output_hint) }.to output("#{I18n.t('error.hints_limit')}\n").to_stdout
+    end
   end
 end

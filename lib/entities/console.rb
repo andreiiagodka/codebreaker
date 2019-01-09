@@ -23,8 +23,6 @@ class Console
     end
   end
 
-  private
-
   def select_option
     case user_input
     when COMMANDS[:start] then navigation
@@ -33,6 +31,8 @@ class Console
     else failing.unexpected_option
     end
   end
+
+  private
 
   def navigation
     @player = create_entity(Player)
