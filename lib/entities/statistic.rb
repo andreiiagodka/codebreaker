@@ -3,7 +3,7 @@
 class Statistic
   DB_DIR = 'database'
   STATISTIC_FILE_NAME = 'statistic'
-  YML_FORMAT = '.yml' 
+  YML_FORMAT = '.yml'
 
   STATISTIC_YML = DB_DIR + '/' + STATISTIC_FILE_NAME + YML_FORMAT
 
@@ -26,26 +26,6 @@ class Statistic
 
   private
 
-  def table_rows
-    File.exist?(STATISTIC_YML) ? load.each_with_index.map { |record, index| rows(record, index) } : []
-  end
-
-  def rows(record, index)
-    [
-      index + 1,
-      record[:name],
-      record[:difficulty],
-      record[:total_attempts],
-      record[:used_attempts],
-      record[:total_hints],
-      record[:used_hints]
-    ]
-  end
-
-  def load
-    YAML.load_stream(File.read(STATISTIC_YML)).sort_by { |statistic| statistic[:difficulty] }
-  end
-
   def record(player, score)
     {
       name: player.name,
@@ -59,5 +39,25 @@ class Statistic
 
   def save_to_file(record)
     File.open(STATISTIC_YML, 'a') { |file| file.write record.to_yaml }
+  end
+
+  def table_rows
+    File.exist?(STATISTIC_YML) ? load.each_with_index.map { |record, index| rows(record, index) } : []
+  end
+
+  def load
+    YAML.load_stream(File.read(STATISTIC_YML)).sort_by { |statistic| statistic[:difficulty] }
+  end
+
+  def rows(record, index)
+    [
+      index + 1,
+      record[:name],
+      record[:difficulty],
+      record[:total_attempts],
+      record[:used_attempts],
+      record[:total_hints],
+      record[:used_hints]
+    ]
   end
 end

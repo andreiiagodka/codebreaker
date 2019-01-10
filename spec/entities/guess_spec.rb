@@ -11,9 +11,11 @@ RSpec.describe Guess do
   let(:hint) { Guess::HINT }
   let(:empty_array) { [] }
   let(:length_error_message) { I18n.t('error.secret_code_length', code_length: Game::SECRET_CODE_LENGTH) }
-  let(:digits_range_error_message) { I18n.t('error.secret_code_digits_range',
-    min_value: Guess::ELEMENT_VALUE_RANGE.min,
-    max_value: Guess::ELEMENT_VALUE_RANGE.max) }
+  let(:digits_range_error_message) do
+    I18n.t('error.secret_code_digits_range',
+           min_value: Guess::ELEMENT_VALUE_RANGE.min,
+           max_value: Guess::ELEMENT_VALUE_RANGE.max)
+  end
 
   describe '#new' do
     it { expect(guess.guess_code).to eq(input_guess_code) }
@@ -21,13 +23,6 @@ RSpec.describe Guess do
   end
 
   describe 'valid guess code' do
-    it 'when hint' do
-      guess.instance_variable_set(:@guess_code, hint)
-      guess.validate
-      expect(guess.errors.empty?).to eq(true)
-      expect(guess.valid?).to eq(true)
-    end
-
     before { guess.validate }
 
     it 'when #validate is true' do
@@ -40,18 +35,49 @@ RSpec.describe Guess do
   end
 
   describe 'invalid guess code' do
-    it 'when too short' do
-      guess.instance_variable_set(:@guess_code, too_short_guess_code)
-      guess.validate
-      expect(guess.errors).to eq([length_error_message])
-      expect(guess.valid?).to eq(false)
+    describe 'guess code is too short' do
+      before do
+        guess.instance_variable_set(:@guess_code, too_short_guess_code)
+        guess.validate
+      end
+
+      it 'when #validate is false' do
+        expect(guess.errors).to eq([length_error_message])
+      end
+
+      it 'when #valid? is false' do
+        expect(guess.valid?).to eq(false)
+      end
     end
 
-    it 'when digits are not in range' do
-      guess.instance_variable_set(:@guess_code, invalid_range_guess_code.join)
+    describe 'guess code digits are not in range' do
+      before do
+        guess.instance_variable_set(:@guess_code, invalid_range_guess_code.join)
+        guess.validate
+      end
+
+      it 'when #validate is false' do
+        expect(guess.errors).to eq([digits_range_error_message])
+      end
+
+      it 'when #valid? is false' do
+        expect(guess.valid?).to eq(false)
+      end
+    end
+  end
+
+  describe 'guess code is hint' do
+    before do
+      guess.instance_variable_set(:@guess_code, hint)
       guess.validate
-      expect(guess.errors).to eq([digits_range_error_message])
-      expect(guess.valid?).to eq(false)
+    end
+
+    it 'when #validate is true' do
+      expect(guess.errors.empty?).to eq(true)
+    end
+
+    it 'when #valid? is true' do
+      expect(guess.valid?).to eq(true)
     end
   end
 

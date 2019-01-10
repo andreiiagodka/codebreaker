@@ -6,10 +6,11 @@ RSpec.describe Player do
   let(:valid_name) { 'a' * Player::NAME_LENGTH_RANGE.max }
   let(:invalid_name) { 'a' * (Player::NAME_LENGTH_RANGE.max + 1) }
   let(:empty_array) { [] }
-  let(:errors_array) { [I18n.t('error.player_name_length',
-    min_length: Player::NAME_LENGTH_RANGE.min,
-    max_length: Player::NAME_LENGTH_RANGE.max)
-  ] }
+  let(:errors_array) do
+    [I18n.t('error.player_name_length',
+            min_length: Player::NAME_LENGTH_RANGE.min,
+            max_length: Player::NAME_LENGTH_RANGE.max)]
+  end
 
   describe '#new' do
     it { expect(player.name).to eq(valid_name) }
@@ -38,7 +39,7 @@ RSpec.describe Player do
       expect(player.errors).to eq(errors_array)
     end
 
-    it 'when #valid? is true' do
+    it 'when #valid? is false' do
       expect(player.valid?).to eq(false)
     end
   end

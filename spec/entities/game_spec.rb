@@ -17,14 +17,11 @@ RSpec.describe Game do
   end
 
   describe '#use_hint' do
+    before { game.instance_variable_set(:@shuffled_code, shuffled_code) }
+
     after { game.use_hint }
 
     it { expect { game.send(:increment_used_hints) }.to change(game, :used_hints).by(1) }
-
-    it 'shifts elements from @shuffled_code' do
-      game.instance_variable_set(:@shuffled_code, shuffled_code)
-      expect(game.instance_variable_get(:@shuffled_code)).to receive(:shift)
-    end
   end
 
   describe '#hints_available?' do
