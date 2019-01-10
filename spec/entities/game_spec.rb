@@ -7,6 +7,7 @@ RSpec.describe Game do
   let(:list_of_difficulties) { Difficulty::DIFFICULTIES.keys }
   let(:secret_code) { Array.new(Game::SECRET_CODE_LENGTH) { rand(Game::ELEMENT_VALUE_RANGE) } }
   let(:shuffled_code) { secret_code.shuffle }
+  let(:not_winning_code) { '7777' }
 
   describe '#new' do
     it { expect(game.difficulty).to eq(difficulty[:level]) }
@@ -43,7 +44,7 @@ RSpec.describe Game do
     end
 
     it 'when not winning combination' do
-      expect(game.win?(secret_code.reverse.join)).to eq false
+      expect(game.win?(not_winning_code)).to eq false
     end
   end
 
