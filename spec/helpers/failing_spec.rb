@@ -3,14 +3,14 @@
 RSpec.describe Failing do
   subject(:failing) { Failing.new }
 
-  let(:player_name_length_message) { I18n.t('error.player_name_length',
-    min_length: Player::NAME_LENGTH_RANGE.min,
-    max_length: Player::NAME_LENGTH_RANGE.max) }
-  let(:secret_code_length_message) { I18n.t('error.secret_code_length',
-    code_length: Game::SECRET_CODE_LENGTH) }
-  let(:secret_code_digits_range_message) { I18n.t('error.secret_code_digits_range',
-    min_value: Guess::ELEMENT_VALUE_RANGE.min,
-    max_value: Guess::ELEMENT_VALUE_RANGE.max) }
+  let(:element_range) { Guess::ELEMENT_VALUE_RANGE }
+  let(:name_range) { Player::NAME_LENGTH_RANGE }
+
+  let(:secret_code_length_message) { I18n.t('error.secret_code_length', code_length: Game::SECRET_CODE_LENGTH) }
+  let(:player_name_length_message) {I18n.t('error.player_name_length', min_length: name_range.min, max_length: name_range.max)}
+  let(:secret_code_digits_range_message) {
+    I18n.t('error.secret_code_digits_range', min_value: element_range.min, max_value: element_range.max)
+  }
 
   describe '#unexpected difficulty' do
     it { expect(failing.unexpected_difficulty).to eq(I18n.t('error.unexpected_difficulty')) }

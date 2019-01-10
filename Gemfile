@@ -12,6 +12,7 @@ group :development do
   gem 'fasterer'
   gem 'pry'
   gem 'rspec'
+  gem 'rubocop-rspec'
   gem 'rubocop', require: false
   gem 'simplecov', require: false, group: :test
 end

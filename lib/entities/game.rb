@@ -76,7 +76,7 @@ class Game
   end
 
   def number_match
-    @converted_input.compact.map.with_index do |digit, index|
+    @converted_input.compact.map do |digit|
       next unless @cloned_code.include?(digit)
 
       @cloned_code.delete_at(@cloned_code.index(digit))
