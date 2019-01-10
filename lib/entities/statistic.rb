@@ -3,7 +3,7 @@
 class Statistic
   DB_DIR = 'database'
   STATISTIC_FILE_NAME = 'statistic'
-  YML_FORMAT = '.yml'
+  YML_FORMAT = '.yml' 
 
   STATISTIC_YML = DB_DIR + '/' + STATISTIC_FILE_NAME + YML_FORMAT
 
