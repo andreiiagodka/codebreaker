@@ -1,17 +1,17 @@
 # frozen_string_literal: true
-require 'pry'
+
 RSpec.describe Console do
   subject(:console) { described_class.new }
 
   let(:statistic) { Statistic.new }
 
   let(:difficulty_double) { instance_double('Difficulty', level: Difficulty::DIFFICULTIES[random_difficulty]) }
-  let(:guess_double) { instance_double('Guess', guess_code: random_secret_code.join ) }
+  let(:guess_double) { instance_double('Guess', guess_code: random_secret_code.join) }
 
   let(:list_of_options) { console.options_list.join("\n") }
   let(:invalid_command) { Console::COMMANDS.keys }
   let(:random_difficulty) { Difficulty::DIFFICULTIES.keys.sample }
-  let(:random_secret_code ) { Array.new(Game::SECRET_CODE_LENGTH) { rand(Game::ELEMENT_VALUE_RANGE) } }
+  let(:random_secret_code) { Array.new(Game::SECRET_CODE_LENGTH) { rand(Game::ELEMENT_VALUE_RANGE) } }
 
   describe '#menu' do
     before do
