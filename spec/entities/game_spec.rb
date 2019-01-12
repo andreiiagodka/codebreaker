@@ -5,9 +5,6 @@ RSpec.describe Game do
 
   let(:difficulty) { Difficulty::DIFFICULTIES[list_of_difficulties.sample] }
   let(:list_of_difficulties) { Difficulty::DIFFICULTIES.keys }
-  let(:secret_code) { Array.new(Game::SECRET_CODE_LENGTH) { rand(Game::ELEMENT_VALUE_RANGE) } }
-  let(:shuffled_code) { secret_code.shuffle }
-  let(:not_winning_code) { '7777' }
 
   describe '#new' do
     it { expect(game.difficulty).to eq(difficulty[:level]) }
@@ -18,11 +15,10 @@ RSpec.describe Game do
   end
 
   describe '#use_hint' do
-    before { game.instance_variable_set(:@shuffled_code, shuffled_code) }
-
-    after { game.use_hint }
-
-    it { expect { game.send(:increment_used_hints) }.to change(game, :used_hints).by(1) }
+    it 'increments used hints' do
+      expect { game.use_hint }.to change(game, :used_hints).by(1)
+      game.use_hint
+    end
   end
 
   describe '#hints_available?' do
@@ -37,6 +33,9 @@ RSpec.describe Game do
   end
 
   describe '#win?' do
+    let(:secret_code) { Array.new(Game::SECRET_CODE_LENGTH) { rand(Game::ELEMENT_VALUE_RANGE) } }
+    let(:not_winning_code) { '7777' }
+
     before { game.instance_variable_set(:@secret_code, secret_code) }
 
     it 'when winning combination' do

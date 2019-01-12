@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe ConsoleUserInteraction do
-  subject(:console) { Console.new }
-
-  let(:list_of_options) { Console::COMMANDS.values.map(&:capitalize) }
+  let(:console) { Console.new }
 
   describe '#options_list' do
+    let(:list_of_options) { Console::COMMANDS.values.map(&:capitalize) }
+
     it { expect(console.options_list).to eq list_of_options }
   end
 

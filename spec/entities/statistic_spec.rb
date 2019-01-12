@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Statistic do
-  subject(:statistic) { described_class.new }
-
-  let(:table_phrases_section) { I18n.t(:table) }
   let(:path) { 'database/test_statistic.yml' }
-  let(:statistic_double) { instance_double('StatisticsRecords') }
   let(:difficulty) { Difficulty::DIFFICULTIES.values.sample }
 
   let(:player) { instance_double('Player', name: 'a' * Player::NAME_LENGTH_RANGE.max) }
@@ -18,17 +14,6 @@ RSpec.describe Statistic do
                     used_hints: 0)
   end
 
-  let(:record_hash) do
-    {
-      name: player.name,
-      difficulty: score.difficulty,
-      total_attempts: score.total_attempts,
-      used_attempts: score.used_attempts,
-      total_hints: score.total_hints,
-      used_hints: score.used_hints
-    }
-  end
-
   before do
     File.new(path, 'w+')
     stub_const('Statistic::STATISTIC_YML', path)
@@ -37,18 +22,20 @@ RSpec.describe Statistic do
   after { File.delete(path) }
 
   describe '#new' do
-    it { expect(statistic.instance_variable_get(:@table)).to eq(table_phrases_section) }
+    let(:table_phrases_section) { I18n.t(:table) }
+
+    it { expect(subject.instance_variable_get(:@table)).to eq(table_phrases_section) }
   end
 
   describe '#save_to_file' do
-    it { expect { statistic.save(player, score) }.to change { statistic.send(:load).count }.by(1) }
+    it { expect { subject.save(player, score) }.to change { subject.send(:load).count }.by(1) }
   end
 
   describe '#load' do
-    before { statistic.save(player, score) }
+    before { subject.save(player, score) }
 
     it 'statistic file is not empty' do
-      expect(statistic.send(:load).empty?).to eq(false)
+      expect(subject.send(:load).empty?).to eq(false)
     end
   end
 end
