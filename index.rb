@@ -2,4 +2,4 @@
 
 require_relative 'autoload.rb'
 
-Console.new.menu
+Codebreaker::Console.new.menu

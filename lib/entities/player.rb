@@ -1,22 +1,24 @@
 # frozen_string_literal: true
 
-class Player < ValidatedEntity
-  attr_reader :name, :errors
+module Codebreaker
+  class Player < ValidatedEntity
+    attr_reader :name, :errors
 
-  NAME_LENGTH_RANGE = (3..20).freeze
+    NAME_LENGTH_RANGE = (3..20).freeze
 
-  def initialize(name)
-    super()
-    @name = name
-  end
+    def initialize(name)
+      super()
+      @name = name
+    end
 
-  def validate
-    @errors << failing.player_name_length unless check_name_length
-  end
+    def validate
+      @errors << failing.player_name_length unless check_name_length
+    end
 
-  private
+    private
 
-  def check_name_length
-    NAME_LENGTH_RANGE.include?(@name.length)
+    def check_name_length
+      NAME_LENGTH_RANGE.include?(@name.length)
+    end
   end
 end
